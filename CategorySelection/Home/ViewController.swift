@@ -15,12 +15,17 @@ class ViewController: UIViewController {
         screen = Screen()
         view = screen
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        screen?.delegate = self
     }
+}
 
-
+extension ViewController: ScreenProtocol {
+    func actionSearchButton() {
+        let searcVC: SearchViewController = SearchViewController()
+        self.navigationController?.pushViewController(searcVC, animated: true)
+    }
 }
 
