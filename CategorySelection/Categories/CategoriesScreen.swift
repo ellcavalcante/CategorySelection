@@ -1,21 +1,21 @@
 //
-//  SearchScreen.swift
+//  CategoriesScreen.swift
 //  CategorySelection
 //
-//  Created by Ellington Cavalcante on 21/09/23.
+//  Created by Ellington Cavalcante on 22/09/23.
 //
 
 import UIKit
 
-protocol SearchScreenProtocol {
+protocol CategoriesScreenProtocol {
     func actionBackButton()
     func actionCleanButton()
     func actionFilterButton()
 }
 
-class SearchScreen: UIView {
+class CategoriesScreen: UIView {
     
-    var delegate: SearchScreenProtocol?
+    var delegate: CategoriesScreenProtocol?
     
     private lazy var topView: UIView = {
         let view = UIView()
@@ -48,7 +48,7 @@ class SearchScreen: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Buscar"
+        label.text = "Categorias"
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -81,33 +81,7 @@ class SearchScreen: UIView {
         delegate?.actionCleanButton()
     }
     
-    public lazy var typeSomethingTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = .no
-        textField.backgroundColor = .white
-        textField.borderStyle = .roundedRect
-        textField.clipsToBounds = true
-        textField.layer.borderWidth = 1.0
-        textField.layer.cornerRadius = 7.5
-        textField.layer.borderColor = UIColor(displayP3Red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
-        textField.autocapitalizationType = .none
-        textField.keyboardType = .default
-        let placeholderText = "Digite algo aqui..."
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 12.0),
-            .foregroundColor: UIColor.systemGray
-        ]
-        let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
-        textField.attributedPlaceholder = attributedPlaceholder
-        textField.textColor = .darkGray
-        textField.clearButtonMode = .whileEditing
-        //        textField.addTarget(self, action: #selector(validateTextFields), for: .editingChanged)
-        textField.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-        return textField
-    }()
-
-    public lazy var filterButton: UIButton = {
+    public lazy var applyButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Filtrar", for: .normal)
@@ -137,15 +111,13 @@ class SearchScreen: UIView {
     
     private func addSubview() {
         addSubview(topView)
-        addSubview(cleanButton)
         addSubview(titleLabel)
-        addSubview(backButton)
-        addSubview(typeSomethingTextField)
         addSubview(bottomView)
-        addSubview(filterButton)
-        setUpConstraints()
+        addSubview(cleanButton)
+        addSubview(backButton)
+        addSubview(applyButton)
         backgroundColor()
-        
+        setUpConstraints()
     }
     
     private func backgroundColor() {
@@ -154,7 +126,6 @@ class SearchScreen: UIView {
     
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
-            
             topView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topView.topAnchor.constraint(equalTo: topAnchor),
@@ -168,21 +139,16 @@ class SearchScreen: UIView {
             
             cleanButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             cleanButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -17),
-
-            typeSomethingTextField.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 32),
-            typeSomethingTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            typeSomethingTextField.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
-            typeSomethingTextField.heightAnchor.constraint(equalToConstant: 44),
+            
+            applyButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            applyButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            applyButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            applyButton.heightAnchor.constraint(equalToConstant: 41),
             
             bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottomView.heightAnchor.constraint(equalToConstant: 95),
-            
-            filterButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
-            filterButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            filterButton.heightAnchor.constraint(equalToConstant: 41),
             
         ])
     }

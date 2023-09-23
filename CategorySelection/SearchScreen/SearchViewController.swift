@@ -29,6 +29,11 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: SearchScreenProtocol {
+    func actionFilterButton() {
+        let categoriesVC: CategoriesViewController = CategoriesViewController()
+        navigationController?.pushViewController(categoriesVC, animated: true)
+    }
+    
     func actionCleanButton() {
         print(#function)
     }
