@@ -106,6 +106,139 @@ class SearchScreen: UIView {
         textField.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         return textField
     }()
+    
+    public lazy var brandView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        view.layer.cornerRadius = 7.5
+        view.clipsToBounds = true
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
+        return view
+    }()
+    
+    public lazy var brandTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Marca"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var brandLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
+        return label
+    }()
+    
+    public lazy var engineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        view.layer.cornerRadius = 7.5
+        view.clipsToBounds = true
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
+        return view
+    }()
+    
+    public lazy var engineTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Motor"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var engineLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString(string: "Filtrar por motor")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
+        return label
+    }()
+    
+    public lazy var yearView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        view.layer.cornerRadius = 7.5
+        view.clipsToBounds = true
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
+        return view
+    }()
+    
+    public lazy var yearTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Ano"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var yearLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString(string: "Filtrar por ano")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
+        return label
+    }()
+    
+    public lazy var colorView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+        view.layer.cornerRadius = 7.5
+        view.clipsToBounds = true
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
+        return view
+    }()
+    
+    public lazy var colorTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Cor"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var colorLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        label.attributedText = attributedText
+        return label
+    }()
+
 
     public lazy var filterButton: UIButton = {
         let button = UIButton()
@@ -125,6 +258,11 @@ class SearchScreen: UIView {
     @objc func tappedFilterButton(){
         delegate?.actionFilterButton()
     }
+    
+    public func configTextFieldDelegate(delegate: UITextFieldDelegate) {
+        typeSomethingTextField.delegate = delegate
+    }
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -143,6 +281,18 @@ class SearchScreen: UIView {
         addSubview(typeSomethingTextField)
         addSubview(bottomView)
         addSubview(filterButton)
+        addSubview(brandTitleLabel)
+        addSubview(brandView)
+        brandView.addSubview(brandLabel)
+        addSubview(engineTitleLabel)
+        addSubview(engineView)
+        engineView.addSubview(engineLabel)
+        addSubview(yearTitleLabel)
+        addSubview(yearView)
+        yearView.addSubview(yearLabel)
+        addSubview(colorTitleLabel)
+        addSubview(colorView)
+        colorView.addSubview(colorLabel)
         setUpConstraints()
         backgroundColor()
         
@@ -183,6 +333,56 @@ class SearchScreen: UIView {
             filterButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             filterButton.heightAnchor.constraint(equalToConstant: 41),
+            
+            brandTitleLabel.topAnchor.constraint(equalTo: typeSomethingTextField.bottomAnchor, constant: 22),
+            brandTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            brandTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
+            
+            brandView.topAnchor.constraint(equalTo: brandTitleLabel.bottomAnchor, constant: 12),
+            brandView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            brandView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            brandView.heightAnchor.constraint(equalToConstant: 40),
+            
+            brandLabel.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
+            brandLabel.leadingAnchor.constraint(equalTo: brandView.leadingAnchor, constant: 12),
+            
+            engineTitleLabel.topAnchor.constraint(equalTo: brandView.bottomAnchor, constant: 12),
+            engineTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            engineTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
+            
+            engineView.topAnchor.constraint(equalTo: engineTitleLabel.bottomAnchor, constant: 12),
+            engineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            engineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            engineView.heightAnchor.constraint(equalToConstant: 40),
+            
+            engineLabel.centerYAnchor.constraint(equalTo: engineView.centerYAnchor),
+            engineLabel.leadingAnchor.constraint(equalTo: engineView.leadingAnchor, constant: 12),
+            
+            yearTitleLabel.topAnchor.constraint(equalTo: engineView.bottomAnchor, constant: 12),
+            yearTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            yearTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
+            
+            yearView.topAnchor.constraint(equalTo: yearTitleLabel.bottomAnchor, constant: 12),
+            yearView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            yearView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            yearView.heightAnchor.constraint(equalToConstant: 40),
+            
+            yearLabel.centerYAnchor.constraint(equalTo: yearView.centerYAnchor),
+            yearLabel.leadingAnchor.constraint(equalTo: yearView.leadingAnchor, constant: 12),
+            
+            colorTitleLabel.topAnchor.constraint(equalTo: yearView.bottomAnchor, constant: 12),
+            colorTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            colorTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
+            
+            colorView.topAnchor.constraint(equalTo: colorTitleLabel.bottomAnchor, constant: 12),
+            colorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            colorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            colorView.heightAnchor.constraint(equalToConstant: 40),
+            
+            colorLabel.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
+            colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12)
+            
+            
             
         ])
     }
