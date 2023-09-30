@@ -10,9 +10,11 @@ import UIKit
 class SearchViewController: UIViewController {
     
     var screen: SearchScreen?
+    var categorieScreen: CategoriesScreen?
     
     override func loadView() {
         screen = SearchScreen()
+        categorieScreen = CategoriesScreen()
         view = screen
     }
 

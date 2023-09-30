@@ -50,12 +50,20 @@ class Screen: UIView {
     public lazy var JSONLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "{}"
         label.textColor = .black
         label.layer.cornerRadius = 7.5
         label.clipsToBounds = true
         label.backgroundColor = UIColor(red: 241/255, green: 241/255, blue: 241/255, alpha: 1.0)
         label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    
+    private lazy var inputJsonLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "{}"
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -93,6 +101,7 @@ class Screen: UIView {
         addSubview(titleLabel)
         addSubview(searchJsonLabel)
         addSubview(JSONLabel)
+        addSubview(inputJsonLabel)
         addSubview(openSearchButton)
         setUpConstraints()
         backgroundColor()
@@ -122,6 +131,11 @@ class Screen: UIView {
             JSONLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             JSONLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             JSONLabel.heightAnchor.constraint(equalToConstant: 254),
+            
+            inputJsonLabel.topAnchor.constraint(equalTo: JSONLabel.topAnchor, constant: 12),
+            inputJsonLabel.leadingAnchor.constraint(equalTo: JSONLabel.leadingAnchor, constant: 12),
+            inputJsonLabel.trailingAnchor.constraint(equalTo: JSONLabel.trailingAnchor, constant: -12),
+            
             
             openSearchButton.topAnchor.constraint(equalTo: JSONLabel.bottomAnchor, constant: 36),
             openSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

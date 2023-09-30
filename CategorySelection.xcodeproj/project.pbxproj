@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B3ADEF12ABD307900E7A8A3 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3ADEF02ABD307900E7A8A3 /* SearchScreen.swift */; };
 		0B3ADEF32ABD309900E7A8A3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3ADEF22ABD309900E7A8A3 /* SearchViewController.swift */; };
+		0B7127BA2AC5142300D821C5 /* ItensTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7127B92AC5142300D821C5 /* ItensTableViewCell.swift */; };
+		0B7127BE2AC5160700D821C5 /* ItensModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7127BD2AC5160700D821C5 /* ItensModel.swift */; };
 		0B72CB092ABE5D3E0057C5A3 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72CB082ABE5D3E0057C5A3 /* CategoriesViewController.swift */; };
 		0B72CB0B2ABE5D5B0057C5A3 /* CategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72CB0A2ABE5D5B0057C5A3 /* CategoriesScreen.swift */; };
 		0BDF52DA2ABBE6B9003B10DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDF52D92ABBE6B9003B10DD /* AppDelegate.swift */; };
@@ -42,6 +44,8 @@
 /* Begin PBXFileReference section */
 		0B3ADEF02ABD307900E7A8A3 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		0B3ADEF22ABD309900E7A8A3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0B7127B92AC5142300D821C5 /* ItensTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItensTableViewCell.swift; sourceTree = "<group>"; };
+		0B7127BD2AC5160700D821C5 /* ItensModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItensModel.swift; sourceTree = "<group>"; };
 		0B72CB082ABE5D3E0057C5A3 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		0B72CB0A2ABE5D5B0057C5A3 /* CategoriesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesScreen.swift; sourceTree = "<group>"; };
 		0BDF52D62ABBE6B9003B10DD /* CategorySelection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategorySelection.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +106,22 @@
 			path = SearchScreen;
 			sourceTree = "<group>";
 		};
+		0B7127B82AC5140900D821C5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0B7127B92AC5142300D821C5 /* ItensTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		0B7127BB2AC515D700D821C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0B7127BD2AC5160700D821C5 /* ItensModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0B72CB072ABE5D240057C5A3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +154,8 @@
 		0BDF52D82ABBE6B9003B10DD /* CategorySelection */ = {
 			isa = PBXGroup;
 			children = (
+				0B7127BB2AC515D700D821C5 /* Model */,
+				0B7127B82AC5140900D821C5 /* Cell */,
 				0B72CB072ABE5D240057C5A3 /* Categories */,
 				0B3ADEEF2ABD305500E7A8A3 /* SearchScreen */,
 				0B3ADEEE2ABD301200E7A8A3 /* Home */,
@@ -294,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B3ADEF32ABD309900E7A8A3 /* SearchViewController.swift in Sources */,
+				0B7127BA2AC5142300D821C5 /* ItensTableViewCell.swift in Sources */,
 				0BDF52DE2ABBE6B9003B10DD /* ViewController.swift in Sources */,
 				0B3ADEF12ABD307900E7A8A3 /* SearchScreen.swift in Sources */,
 				0BDF52DA2ABBE6B9003B10DD /* AppDelegate.swift in Sources */,
@@ -301,6 +324,7 @@
 				0B72CB092ABE5D3E0057C5A3 /* CategoriesViewController.swift in Sources */,
 				0BDF530A2ABBE6D7003B10DD /* Screen.swift in Sources */,
 				0B72CB0B2ABE5D5B0057C5A3 /* CategoriesScreen.swift in Sources */,
+				0B7127BE2AC5160700D821C5 /* ItensModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

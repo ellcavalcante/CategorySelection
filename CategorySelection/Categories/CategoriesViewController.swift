@@ -10,6 +10,10 @@ import UIKit
 class CategoriesViewController: UIViewController {
     
     var screen: CategoriesScreen?
+    var itensBrand: [ItensModel] = [ItensModel(itens: "Toyota"),
+                                    ItensModel(itens: "Ford"),
+                                    ItensModel(itens: "Volkswagen"),
+                                    ItensModel(itens: "Honda")]
     
     var titleLabel: String
     
@@ -27,18 +31,39 @@ class CategoriesViewController: UIViewController {
         screen = CategoriesScreen()
         view = screen
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate = self
         screen?.titleLabel.text = titleLabel
+        screen?.configTableViewProtocols(delegate: self, dataSource: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+}
 
+extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return itensBrand.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItensTableViewCell.identifier, for: indexPath) as? ItensTableViewCell
+        cell?.setUpCell(data: itensBrand[indexPath.row])
+        cell?.selectionStyle = .none
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55
+    }
+    
+    
 }
 
 extension CategoriesViewController: CategoriesScreenProtocol {

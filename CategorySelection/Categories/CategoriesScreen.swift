@@ -99,6 +99,21 @@ class CategoriesScreen: UIView {
     @objc func tappedFilterButton(){
         delegate?.actionFilterButton()
     }
+    
+    public lazy var itensTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = .white
+        tableView.isScrollEnabled = false
+        tableView.register(ItensTableViewCell.self, forCellReuseIdentifier: ItensTableViewCell.identifier)
+        return tableView
+    }()
+
+    public func configTableViewProtocols(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        itensTableView.delegate = delegate
+        itensTableView.dataSource = dataSource
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -112,6 +127,7 @@ class CategoriesScreen: UIView {
     private func addSubview() {
         addSubview(topView)
         addSubview(titleLabel)
+        addSubview(itensTableView)
         addSubview(bottomView)
         addSubview(cleanButton)
         addSubview(backButton)
@@ -149,6 +165,11 @@ class CategoriesScreen: UIView {
             bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottomView.heightAnchor.constraint(equalToConstant: 95),
+            
+            itensTableView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 10),
+            itensTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            itensTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            itensTableView.bottomAnchor.constraint(equalTo: bottomView.topAnchor),
             
         ])
     }

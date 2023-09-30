@@ -341,10 +341,12 @@ class SearchScreen: UIView {
             brandView.topAnchor.constraint(equalTo: brandTitleLabel.bottomAnchor, constant: 12),
             brandView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             brandView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            brandView.heightAnchor.constraint(equalToConstant: 40),
             
-            brandLabel.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
+            brandLabel.topAnchor.constraint(equalTo: brandView.topAnchor),
             brandLabel.leadingAnchor.constraint(equalTo: brandView.leadingAnchor, constant: 12),
+            brandLabel.trailingAnchor.constraint(equalTo: brandView.trailingAnchor),
+            brandLabel.bottomAnchor.constraint(equalTo: brandView.bottomAnchor),
+            brandLabel.heightAnchor.constraint(equalToConstant: 40),
             
             engineTitleLabel.topAnchor.constraint(equalTo: brandView.bottomAnchor, constant: 12),
             engineTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -353,10 +355,12 @@ class SearchScreen: UIView {
             engineView.topAnchor.constraint(equalTo: engineTitleLabel.bottomAnchor, constant: 12),
             engineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             engineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            engineView.heightAnchor.constraint(equalToConstant: 40),
-            
-            engineLabel.centerYAnchor.constraint(equalTo: engineView.centerYAnchor),
+
+            engineLabel.topAnchor.constraint(equalTo: engineView.topAnchor),
             engineLabel.leadingAnchor.constraint(equalTo: engineView.leadingAnchor, constant: 12),
+            engineLabel.trailingAnchor.constraint(equalTo: engineView.trailingAnchor),
+            engineLabel.bottomAnchor.constraint(equalTo: engineView.bottomAnchor),
+            engineLabel.heightAnchor.constraint(equalToConstant: 40),
             
             yearTitleLabel.topAnchor.constraint(equalTo: engineView.bottomAnchor, constant: 12),
             yearTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -365,10 +369,12 @@ class SearchScreen: UIView {
             yearView.topAnchor.constraint(equalTo: yearTitleLabel.bottomAnchor, constant: 12),
             yearView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             yearView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            yearView.heightAnchor.constraint(equalToConstant: 40),
-            
-            yearLabel.centerYAnchor.constraint(equalTo: yearView.centerYAnchor),
+
+            yearLabel.topAnchor.constraint(equalTo: yearView.topAnchor),
             yearLabel.leadingAnchor.constraint(equalTo: yearView.leadingAnchor, constant: 12),
+            yearLabel.trailingAnchor.constraint(equalTo: yearView.trailingAnchor),
+            yearLabel.bottomAnchor.constraint(equalTo: yearView.bottomAnchor),
+            yearLabel.heightAnchor.constraint(equalToConstant: 40),
             
             colorTitleLabel.topAnchor.constraint(equalTo: yearView.bottomAnchor, constant: 12),
             colorTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -377,10 +383,12 @@ class SearchScreen: UIView {
             colorView.topAnchor.constraint(equalTo: colorTitleLabel.bottomAnchor, constant: 12),
             colorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             colorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            colorView.heightAnchor.constraint(equalToConstant: 40),
-            
-            colorLabel.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
-            colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12)
+
+            colorLabel.topAnchor.constraint(equalTo: colorView.topAnchor),
+            colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
+            colorLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
+            colorLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor),
+            colorLabel.heightAnchor.constraint(equalToConstant: 40),
             
             
             
