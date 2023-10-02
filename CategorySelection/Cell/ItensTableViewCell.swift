@@ -11,7 +11,7 @@ class ItensTableViewCell: UITableViewCell {
     
     static let identifier: String = String(describing: ItensTableViewCell.self)
     
-    private lazy var checkEmptyView: UIView = {
+    public lazy var checkEmptyView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -19,6 +19,7 @@ class ItensTableViewCell: UITableViewCell {
         view.layer.cornerRadius = 4.5
         view.layer.borderWidth = 2.0
         view.layer.borderColor = UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0).cgColor
+        view.isHidden = false
         return view
     }()
     
@@ -31,7 +32,7 @@ class ItensTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var checkFilledView: UIView = {
+    public lazy var checkFilledView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -43,7 +44,7 @@ class ItensTableViewCell: UITableViewCell {
         return view
     }()
     
-    private lazy var filledView: UIView = {
+    public lazy var filledView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(red: 149/255, green: 54/255, blue: 244/255, alpha: 1.0)
