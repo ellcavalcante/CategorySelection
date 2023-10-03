@@ -11,10 +11,7 @@ class CategoriesViewController: UIViewController {
     
     var screen: CategoriesScreen?
     var searchVC: SearchViewController = SearchViewController()
-    var itensBrand: [ItensModel] = [ItensModel(itens: "Toyota"),
-                                    ItensModel(itens: "Ford"),
-                                    ItensModel(itens: "Volkswagen"),
-                                    ItensModel(itens: "Honda")]
+    var dataArray: [ItensModel] = []
     
     var titleLabel: String
     var selectedItems: [String] = []
@@ -23,11 +20,11 @@ class CategoriesViewController: UIViewController {
     var selectedItemsCount: Int {
         return selectedItems.count
     }
-
     
-    init(titleLabel: String) {
+    init(titleLabel: String, dataArray: [ItensModel]) {
         
         self.titleLabel = titleLabel
+        self.dataArray = dataArray
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,12 +58,12 @@ class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itensBrand.count
+        return dataArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItensTableViewCell.identifier, for: indexPath) as? ItensTableViewCell
-        cell?.setUpCell(data: itensBrand[indexPath.row])
+        cell?.setUpCell(data: dataArray[indexPath.row])
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
@@ -76,7 +73,7 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.checkEmptyView.isHidden = true
             cell.checkFilledView.isHidden = false
             cell.filledView.isHidden = false
-            let selectedItem = itensBrand[indexPath.row].itens
+            let selectedItem = dataArray[indexPath.row].itens
             selectedItems.append(selectedItem)
             updateButtonTitle()
             print("\(selectedItems)")
@@ -88,11 +85,11 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.checkEmptyView.isHidden = false
             cell.checkFilledView.isHidden = true
             cell.filledView.isHidden = true
-            let deselectedItem = itensBrand[indexPath.row].itens
+            let deselectedItem = dataArray[indexPath.row].itens
             if let index = selectedItems.firstIndex(of: deselectedItem) {
-            selectedItems.remove(at: index)
-            updateButtonTitle()
-            print("\(selectedItems)")
+                selectedItems.remove(at: index)
+                updateButtonTitle()
+                print("\(selectedItems)")
             }
         }
     }
@@ -111,15 +108,23 @@ extension CategoriesViewController: CategoriesScreenProtocol {
     
     func actionCleanButton() {
         if selectedItems.isEmpty {
-                let alertController = UIAlertController(title: "Nenhum item selecionado", message: "Selecione os itens antes de limpar.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alertController.addAction(okAction)
-                present(alertController, animated: true, completion: nil)
-            } else {
-                selectedItems.removeAll()
-                screen?.itensTableView.reloadData()
-                print("Todos os itens removidos")
+            let alertController = UIAlertController(title: "Nenhum item selecionado", message: "Selecione os itens antes de limpar.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        } else {
+            selectedItems.removeAll()
+            updateButtonTitle()
+            if let visibleCells = screen?.itensTableView.visibleCells as? [ItensTableViewCell] {
+                for cell in visibleCells {
+                    cell.checkEmptyView.isHidden = false
+                    cell.checkFilledView.isHidden = true
+                    cell.filledView.isHidden = true
+                }
             }
+            screen?.itensTableView.reloadData()
+            print("Todos os itens removidos")
+        }
     }
     
     func actionFilterButton() {

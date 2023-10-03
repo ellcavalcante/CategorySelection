@@ -48,22 +48,51 @@ class SearchViewController: UIViewController {
     }
     
     @objc func brandViewTapped() {
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "")
+        
+        let arrayToPass: [ItensModel] = [ItensModel(itens: "Toyota"),
+                                         ItensModel(itens: "Ford"),
+                                         ItensModel(itens: "Volkswagen"),
+                                         ItensModel(itens: "Honda")]
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass)
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func engineViewTapped() {
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "")
+        let arrayToPass: [ItensModel] = [ItensModel(itens: "4 cilindros"),
+                                         ItensModel(itens: "V6"),
+                                         ItensModel(itens: "Híbrido"),
+                                         ItensModel(itens: "V8")]
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "", dataArray: arrayToPass)
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func yearViewTapped() {
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "")
+        let arrayToPass: [ItensModel] = [ItensModel(itens: "1966"),
+                                         ItensModel(itens: "1982"),
+                                         ItensModel(itens: "1994"),
+                                         ItensModel(itens: "2001"),
+                                         ItensModel(itens: "1997"),
+                                         ItensModel(itens: "2020"),
+                                         ItensModel(itens: "1951"),
+                                         ItensModel(itens: "1999"),
+                                         ItensModel(itens: "1995"),
+                                         ItensModel(itens: "1975")]
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: arrayToPass)
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func colorViewTapped() {
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "")
+        let arrayToPass: [ItensModel] = [ItensModel(itens: "Branco"),
+                                         ItensModel(itens: "Preto"),
+                                         ItensModel(itens: "Prata"),
+                                         ItensModel(itens: "Cinza"),
+                                         ItensModel(itens: "Azul"),
+                                         ItensModel(itens: "Vermelho"),
+                                         ItensModel(itens: "Verde"),
+                                         ItensModel(itens: "Amarelo"),
+                                         ItensModel(itens: "Laranja"),
+                                         ItensModel(itens: "Marrom")]
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayToPass)
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     

@@ -84,7 +84,7 @@ class CategoriesScreen: UIView {
     public lazy var applyButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Aplicar", for: .normal)
+        button.setTitle("Aplicar (0)", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(UIColor(red: 233/255, green: 241/255, blue: 247/255, alpha: 1.0), for: .normal)
         button.clipsToBounds = true
@@ -105,7 +105,7 @@ class CategoriesScreen: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .singleLine
         tableView.backgroundColor = .white
-        tableView.isScrollEnabled = false
+        tableView.isScrollEnabled = true
         tableView.register(ItensTableViewCell.self, forCellReuseIdentifier: ItensTableViewCell.identifier)
         return tableView
     }()
