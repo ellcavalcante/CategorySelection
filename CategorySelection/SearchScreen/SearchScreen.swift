@@ -127,9 +127,10 @@ class SearchScreen: UIView {
         return label
     }()
     
-    private lazy var brandLabel: UILabel = {
+    public lazy var brandLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
@@ -138,6 +139,15 @@ class SearchScreen: UIView {
         attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
         label.attributedText = attributedText
         return label
+    }()
+    
+    public lazy var pencilButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "ic-edit"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.isHidden = true
+        return button
     }()
     
     public lazy var engineView: UIView = {
@@ -160,7 +170,7 @@ class SearchScreen: UIView {
         return label
     }()
     
-    private lazy var engineLabel: UILabel = {
+    public lazy var engineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "Filtrar por motor")
@@ -193,7 +203,7 @@ class SearchScreen: UIView {
         return label
     }()
     
-    private lazy var yearLabel: UILabel = {
+    public lazy var yearLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "Filtrar por ano")
@@ -226,7 +236,7 @@ class SearchScreen: UIView {
         return label
     }()
     
-    private lazy var colorLabel: UILabel = {
+    public lazy var colorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
@@ -284,6 +294,7 @@ class SearchScreen: UIView {
         addSubview(brandTitleLabel)
         addSubview(brandView)
         brandView.addSubview(brandLabel)
+        brandView.addSubview(pencilButton)
         addSubview(engineTitleLabel)
         addSubview(engineView)
         engineView.addSubview(engineLabel)
@@ -337,16 +348,19 @@ class SearchScreen: UIView {
             brandTitleLabel.topAnchor.constraint(equalTo: typeSomethingTextField.bottomAnchor, constant: 22),
             brandTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             brandTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
-            
+
             brandView.topAnchor.constraint(equalTo: brandTitleLabel.bottomAnchor, constant: 12),
             brandView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             brandView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            brandLabel.topAnchor.constraint(equalTo: brandView.topAnchor),
+
+            brandLabel.topAnchor.constraint(equalTo: brandView.topAnchor, constant: 10),
             brandLabel.leadingAnchor.constraint(equalTo: brandView.leadingAnchor, constant: 12),
             brandLabel.trailingAnchor.constraint(equalTo: brandView.trailingAnchor),
-            brandLabel.bottomAnchor.constraint(equalTo: brandView.bottomAnchor),
-            brandLabel.heightAnchor.constraint(equalToConstant: 40),
+            brandLabel.bottomAnchor.constraint(equalTo: brandView.bottomAnchor, constant: -10),
+            brandLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            
+            pencilButton.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
+            pencilButton.trailingAnchor.constraint(equalTo: brandView.trailingAnchor, constant: -22),
             
             engineTitleLabel.topAnchor.constraint(equalTo: brandView.bottomAnchor, constant: 12),
             engineTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

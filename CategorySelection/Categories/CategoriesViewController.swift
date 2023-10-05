@@ -4,10 +4,15 @@
 //
 //  Created by Ellington Cavalcante on 22/09/23.
 //
+protocol CategoriesViewControllerDelegate: AnyObject {
+    func didSelectItems(_ selectedItems: [String], forCategory category: String)
+}
 
 import UIKit
 
 class CategoriesViewController: UIViewController {
+    
+    weak var delegate: CategoriesViewControllerDelegate?
     
     var screen: CategoriesScreen?
     var searchVC: SearchViewController = SearchViewController()
@@ -20,7 +25,7 @@ class CategoriesViewController: UIViewController {
     var selectedItemsCount: Int {
         return selectedItems.count
     }
-    
+
     init(titleLabel: String, dataArray: [ItensModel]) {
         
         self.titleLabel = titleLabel
@@ -102,6 +107,7 @@ func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) ->
 }
 
 extension CategoriesViewController: CategoriesScreenProtocol {
+    
     func actionBackButton() {
         navigationController?.popViewController(animated: true)
     }
@@ -128,6 +134,7 @@ extension CategoriesViewController: CategoriesScreenProtocol {
     }
     
     func actionFilterButton() {
-        print(#function)
+        delegate?.didSelectItems(selectedItems, forCategory: titleLabel)
+            navigationController?.popViewController(animated: true)
     }
 }

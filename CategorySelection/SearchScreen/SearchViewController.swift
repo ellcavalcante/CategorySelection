@@ -8,13 +8,11 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    
+
     var screen: SearchScreen?
-    var categorieScreen: CategoriesScreen?
     
     override func loadView() {
         screen = SearchScreen()
-        categorieScreen = CategoriesScreen()
         view = screen
     }
 
@@ -54,6 +52,7 @@ class SearchViewController: UIViewController {
                                          ItensModel(itens: "Volkswagen"),
                                          ItensModel(itens: "Honda")]
         let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass)
+        screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
@@ -101,6 +100,17 @@ class SearchViewController: UIViewController {
     }
 }
 
+extension SearchViewController: CategoriesViewControllerDelegate {
+    func didSelectItems(_ selectedItems: [String], forCategory category: String) {
+        if category == screen?.brandTitleLabel.text {
+            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            screen?.brandLabel.text = selectedItemsText
+            screen?.brandLabel.textColor = UIColor.black
+            screen?.pencilButton.isHidden = false
+        }
+    }
+}
+
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -113,8 +123,44 @@ extension SearchViewController: SearchScreenProtocol {
     }
     
     func actionCleanButton() {
-        print(#function)
-//        screen?.typeSomethingTextField.becomeFirstResponder()
+        //atributos do campo marca
+        let attributedBrandText = NSMutableAttributedString(string: "Filtrar por marca")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedBrandText.addAttributes(attributes, range: NSRange(location: 0, length: attributedBrandText.length))
+        screen?.brandLabel.attributedText = attributedBrandText
+        
+        //atributos do campo motor
+        let attributedEngineText = NSMutableAttributedString(string: "Filtrar por motor")
+        let attributesEngine: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedEngineText.addAttributes(attributesEngine, range: NSRange(location: 0, length: attributedEngineText.length))
+        screen?.engineLabel.attributedText = attributedEngineText
+        
+        //atributos do campo ano
+        let attributedYearText = NSMutableAttributedString(string: "Filtrar por ano")
+        let attributesYear: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedYearText.addAttributes(attributesYear, range: NSRange(location: 0, length: attributedYearText.length))
+        screen?.yearLabel.attributedText = attributedYearText
+
+        //atributos do campo cor
+        let attributedColorText = NSMutableAttributedString(string: "Filtrar por cor")
+        let attributesColor: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .foregroundColor: UIColor.systemGray,
+        ]
+        attributedColorText.addAttributes(attributesColor, range: NSRange(location: 0, length: attributedColorText.length))
+        screen?.colorLabel.attributedText = attributedColorText
+        
+        //esconder o ícone de lapis
+        screen?.pencilButton.isHidden = true
     }
     
     func actionBackButton() {
