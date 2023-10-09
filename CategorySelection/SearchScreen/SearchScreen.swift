@@ -141,7 +141,7 @@ class SearchScreen: UIView {
         return label
     }()
     
-    public lazy var pencilButton: UIButton = {
+    public lazy var pencilBrandButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "ic-edit"), for: .normal)
@@ -173,6 +173,7 @@ class SearchScreen: UIView {
     public lazy var engineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         let attributedText = NSMutableAttributedString(string: "Filtrar por motor")
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
@@ -181,6 +182,15 @@ class SearchScreen: UIView {
         attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
         label.attributedText = attributedText
         return label
+    }()
+    
+    public lazy var pencilEngineButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "ic-edit"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.isHidden = true
+        return button
     }()
     
     public lazy var yearView: UIView = {
@@ -206,6 +216,7 @@ class SearchScreen: UIView {
     public lazy var yearLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         let attributedText = NSMutableAttributedString(string: "Filtrar por ano")
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
@@ -214,6 +225,15 @@ class SearchScreen: UIView {
         attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
         label.attributedText = attributedText
         return label
+    }()
+    
+    public lazy var pencilYearButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "ic-edit"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.isHidden = true
+        return button
     }()
     
     public lazy var colorView: UIView = {
@@ -239,6 +259,7 @@ class SearchScreen: UIView {
     public lazy var colorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
@@ -249,6 +270,14 @@ class SearchScreen: UIView {
         return label
     }()
 
+    public lazy var pencilColorButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "ic-edit"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.isHidden = true
+        return button
+    }()
 
     public lazy var filterButton: UIButton = {
         let button = UIButton()
@@ -294,16 +323,19 @@ class SearchScreen: UIView {
         addSubview(brandTitleLabel)
         addSubview(brandView)
         brandView.addSubview(brandLabel)
-        brandView.addSubview(pencilButton)
+        brandView.addSubview(pencilBrandButton)
         addSubview(engineTitleLabel)
         addSubview(engineView)
         engineView.addSubview(engineLabel)
+        engineView.addSubview(pencilEngineButton)
         addSubview(yearTitleLabel)
         addSubview(yearView)
         yearView.addSubview(yearLabel)
+        yearView.addSubview(pencilYearButton)
         addSubview(colorTitleLabel)
         addSubview(colorView)
         colorView.addSubview(colorLabel)
+        colorView.addSubview(pencilColorButton)
         setUpConstraints()
         backgroundColor()
         
@@ -359,8 +391,8 @@ class SearchScreen: UIView {
             brandLabel.bottomAnchor.constraint(equalTo: brandView.bottomAnchor, constant: -10),
             brandLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             
-            pencilButton.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
-            pencilButton.trailingAnchor.constraint(equalTo: brandView.trailingAnchor, constant: -22),
+            pencilBrandButton.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
+            pencilBrandButton.trailingAnchor.constraint(equalTo: brandView.trailingAnchor, constant: -22),
             
             engineTitleLabel.topAnchor.constraint(equalTo: brandView.bottomAnchor, constant: 12),
             engineTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -370,11 +402,14 @@ class SearchScreen: UIView {
             engineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             engineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            engineLabel.topAnchor.constraint(equalTo: engineView.topAnchor),
+            engineLabel.topAnchor.constraint(equalTo: engineView.topAnchor, constant: 10),
             engineLabel.leadingAnchor.constraint(equalTo: engineView.leadingAnchor, constant: 12),
             engineLabel.trailingAnchor.constraint(equalTo: engineView.trailingAnchor),
-            engineLabel.bottomAnchor.constraint(equalTo: engineView.bottomAnchor),
-            engineLabel.heightAnchor.constraint(equalToConstant: 40),
+            engineLabel.bottomAnchor.constraint(equalTo: engineView.bottomAnchor, constant: -10),
+            engineLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            
+            pencilEngineButton.centerYAnchor.constraint(equalTo: engineView.centerYAnchor),
+            pencilEngineButton.trailingAnchor.constraint(equalTo: engineView.trailingAnchor, constant: -22),
             
             yearTitleLabel.topAnchor.constraint(equalTo: engineView.bottomAnchor, constant: 12),
             yearTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -384,11 +419,14 @@ class SearchScreen: UIView {
             yearView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             yearView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            yearLabel.topAnchor.constraint(equalTo: yearView.topAnchor),
+            yearLabel.topAnchor.constraint(equalTo: yearView.topAnchor, constant: 10),
             yearLabel.leadingAnchor.constraint(equalTo: yearView.leadingAnchor, constant: 12),
             yearLabel.trailingAnchor.constraint(equalTo: yearView.trailingAnchor),
-            yearLabel.bottomAnchor.constraint(equalTo: yearView.bottomAnchor),
-            yearLabel.heightAnchor.constraint(equalToConstant: 40),
+            yearLabel.bottomAnchor.constraint(equalTo: yearView.bottomAnchor, constant: -10),
+            yearLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            
+            pencilYearButton.centerYAnchor.constraint(equalTo: yearView.centerYAnchor),
+            pencilYearButton.trailingAnchor.constraint(equalTo: yearView.trailingAnchor, constant: -22),
             
             colorTitleLabel.topAnchor.constraint(equalTo: yearView.bottomAnchor, constant: 12),
             colorTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -398,14 +436,15 @@ class SearchScreen: UIView {
             colorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             colorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            colorLabel.topAnchor.constraint(equalTo: colorView.topAnchor),
+            colorLabel.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 10),
             colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             colorLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
-            colorLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor),
-            colorLabel.heightAnchor.constraint(equalToConstant: 40),
+            colorLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -10),
+            yearLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             
-            
-            
+            pencilColorButton.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
+            pencilColorButton.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -22),
+
         ])
     }
 }

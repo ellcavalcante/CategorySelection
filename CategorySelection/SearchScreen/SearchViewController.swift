@@ -62,6 +62,7 @@ class SearchViewController: UIViewController {
                                          ItensModel(itens: "Híbrido"),
                                          ItensModel(itens: "V8")]
         let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "", dataArray: arrayToPass)
+        screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
@@ -77,6 +78,7 @@ class SearchViewController: UIViewController {
                                          ItensModel(itens: "1995"),
                                          ItensModel(itens: "1975")]
         let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: arrayToPass)
+        screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
@@ -92,6 +94,7 @@ class SearchViewController: UIViewController {
                                          ItensModel(itens: "Laranja"),
                                          ItensModel(itens: "Marrom")]
         let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayToPass)
+        screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
@@ -106,7 +109,22 @@ extension SearchViewController: CategoriesViewControllerDelegate {
             let selectedItemsText = selectedItems.joined(separator: "\n\n")
             screen?.brandLabel.text = selectedItemsText
             screen?.brandLabel.textColor = UIColor.black
-            screen?.pencilButton.isHidden = false
+            screen?.pencilBrandButton.isHidden = false
+        } else if category == screen?.engineTitleLabel.text {
+            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            screen?.engineLabel.text = selectedItemsText
+            screen?.engineLabel.textColor = UIColor.black
+            screen?.pencilEngineButton.isHidden = false
+        } else if category == screen?.yearTitleLabel.text {
+            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            screen?.yearLabel.text = selectedItemsText
+            screen?.yearLabel.textColor = UIColor.black
+            screen?.pencilYearButton.isHidden = false
+        } else {
+            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            screen?.colorLabel.text = selectedItemsText
+            screen?.colorLabel.textColor = UIColor.black
+            screen?.pencilColorButton.isHidden = false
         }
     }
 }
@@ -160,7 +178,10 @@ extension SearchViewController: SearchScreenProtocol {
         screen?.colorLabel.attributedText = attributedColorText
         
         //esconder o ícone de lapis
-        screen?.pencilButton.isHidden = true
+        screen?.pencilBrandButton.isHidden = true
+        screen?.pencilEngineButton.isHidden = true
+        screen?.pencilYearButton.isHidden = true
+        screen?.pencilColorButton.isHidden = true
     }
     
     func actionBackButton() {
