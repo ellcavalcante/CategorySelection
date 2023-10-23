@@ -10,7 +10,7 @@ import UIKit
 protocol CategoriesScreenProtocol {
     func actionBackButton()
     func actionCleanButton()
-    func actionFilterButton()
+    func actionApplyButton()
 }
 
 class CategoriesScreen: UIView {
@@ -97,7 +97,7 @@ class CategoriesScreen: UIView {
     }()
     
     @objc func tappedFilterButton(){
-        delegate?.actionFilterButton()
+        delegate?.actionApplyButton()
     }
     
     public lazy var itensTableView: UITableView = {

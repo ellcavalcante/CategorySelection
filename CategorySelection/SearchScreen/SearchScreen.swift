@@ -440,7 +440,7 @@ class SearchScreen: UIView {
             colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             colorLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
             colorLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -10),
-            yearLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            colorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             
             pencilColorButton.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
             pencilColorButton.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -22),

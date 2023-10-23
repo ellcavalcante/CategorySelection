@@ -8,14 +8,16 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-
+    
     var screen: SearchScreen?
+    var brandSelectedItems: [ItemModel] = []
+    var colorSelectedItems: [ItemModel] = []
     
     override func loadView() {
         screen = SearchScreen()
         view = screen
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate = self
@@ -29,6 +31,7 @@ class SearchViewController: UIViewController {
     }
     
     private func settings() {
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -46,56 +49,48 @@ class SearchViewController: UIViewController {
     }
     
     @objc func brandViewTapped() {
-        
-        let arrayToPass: [ItensModel] = [ItensModel(itens: "Toyota"),
-                                         ItensModel(itens: "Ford"),
-                                         ItensModel(itens: "Volkswagen"),
-                                         ItensModel(itens: "Honda")]
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass)
+        let arrayToPass: [ItemModel] = [ItemModel(name: "Toyota", id: 1),
+                                         ItemModel(name: "Ford", id: 2),
+                                         ItemModel(name: "Volkswagen", id: 3),
+                                         ItemModel(name: "Honda", id: 4)]
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass, rowsItems: brandSelectedItems, selectedItems: brandSelectedItems)
         screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
+    
     @objc func engineViewTapped() {
-        let arrayToPass: [ItensModel] = [ItensModel(itens: "4 cilindros"),
-                                         ItensModel(itens: "V6"),
-                                         ItensModel(itens: "Híbrido"),
-                                         ItensModel(itens: "V8")]
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "", dataArray: arrayToPass)
-        screenCategories.delegate = self
-        self.navigationController?.pushViewController(screenCategories, animated: true)
+        if screen?.brandLabel.attributedText?.string != "Filtrar por marca" {
+            let arrayToPass: [EngineModel] = []
+            //            let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "", dataArray: arrayToPass)
+            //            screenCategories.delegate = self
+            //            self.navigationController?.pushViewController(screenCategories, animated: true)
+        }
     }
     
     @objc func yearViewTapped() {
-        let arrayToPass: [ItensModel] = [ItensModel(itens: "1966"),
-                                         ItensModel(itens: "1982"),
-                                         ItensModel(itens: "1994"),
-                                         ItensModel(itens: "2001"),
-                                         ItensModel(itens: "1997"),
-                                         ItensModel(itens: "2020"),
-                                         ItensModel(itens: "1951"),
-                                         ItensModel(itens: "1999"),
-                                         ItensModel(itens: "1995"),
-                                         ItensModel(itens: "1975")]
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: arrayToPass)
-        screenCategories.delegate = self
-        self.navigationController?.pushViewController(screenCategories, animated: true)
+        if screen?.brandLabel.attributedText?.string != "Filtrar por marca" {
+            let arrayToPass: [YearModel] = []
+            //            let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: arrayToPass)
+            //            screenCategories.delegate = self
+            //            self.navigationController?.pushViewController(screenCategories, animated: true)
+        }
     }
     
     @objc func colorViewTapped() {
-        let arrayToPass: [ItensModel] = [ItensModel(itens: "Branco"),
-                                         ItensModel(itens: "Preto"),
-                                         ItensModel(itens: "Prata"),
-                                         ItensModel(itens: "Cinza"),
-                                         ItensModel(itens: "Azul"),
-                                         ItensModel(itens: "Vermelho"),
-                                         ItensModel(itens: "Verde"),
-                                         ItensModel(itens: "Amarelo"),
-                                         ItensModel(itens: "Laranja"),
-                                         ItensModel(itens: "Marrom")]
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayToPass)
-        screenCategories.delegate = self
-        self.navigationController?.pushViewController(screenCategories, animated: true)
+        let arrayColorToPass: [ItemModel] = [ItemModel(name: "Branco", id: 1),
+                                             ItemModel(name: "Preto", id: 2),
+                                             ItemModel(name: "Prata", id: 3),
+                                             ItemModel(name: "Cinza", id: 4),
+                                             ItemModel(name: "Azul", id: 5),
+                                             ItemModel(name: "Vermelho", id: 6),
+                                             ItemModel(name: "Verde", id: 7),
+                                             ItemModel(name: "Amarelo", id: 8),
+                                             ItemModel(name: "Laranja", id: 9),
+                                             ItemModel(name: "Marrom", id: 10)]
+                let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayColorToPass, rowsItems: colorSelectedItems, selectedItems: colorSelectedItems)
+                screenCategories.delegate = self
+                self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func dismissKeyboard() {
@@ -104,27 +99,55 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: CategoriesViewControllerDelegate {
-    func didSelectItems(_ selectedItems: [String], forCategory category: String) {
+    
+    func didSelectItems(_ selectedItems: [ItemModel], forCategory category: String) {
+        
         if category == screen?.brandTitleLabel.text {
-            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            let selectedItemsText = selectedItems.map { $0.name }.joined(separator: "\n\n")
             screen?.brandLabel.text = selectedItemsText
             screen?.brandLabel.textColor = UIColor.black
             screen?.pencilBrandButton.isHidden = false
+            brandSelectedItems = selectedItems
         } else if category == screen?.engineTitleLabel.text {
-            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            let selectedItemsText = selectedItems.map { $0.name }.joined(separator: "\n\n")
             screen?.engineLabel.text = selectedItemsText
             screen?.engineLabel.textColor = UIColor.black
             screen?.pencilEngineButton.isHidden = false
         } else if category == screen?.yearTitleLabel.text {
-            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            let selectedItemsText = selectedItems.map { $0.name }.joined(separator: "\n\n")
             screen?.yearLabel.text = selectedItemsText
             screen?.yearLabel.textColor = UIColor.black
             screen?.pencilYearButton.isHidden = false
         } else {
-            let selectedItemsText = selectedItems.joined(separator: "\n\n")
+            let selectedItemsText = selectedItems.map { $0.name }.joined(separator: "\n\n")
             screen?.colorLabel.text = selectedItemsText
             screen?.colorLabel.textColor = UIColor.black
             screen?.pencilColorButton.isHidden = false
+            colorSelectedItems = selectedItems
+        }
+    }
+    
+    func emptySelectItems(_ selectedItems: [ItemModel], forCategory category: String) {
+        if category == screen?.brandTitleLabel.text && selectedItems == [] {
+            let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.systemGray,
+            ]
+            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+            screen?.brandLabel.attributedText = attributedText
+            screen?.pencilBrandButton.isHidden = true
+            brandSelectedItems = selectedItems
+        } else if category == screen?.colorTitleLabel.text && selectedItems == [] {
+            let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.systemGray,
+            ]
+            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+            screen?.colorLabel.attributedText = attributedText
+            screen?.pencilColorButton.isHidden = true
+            colorSelectedItems = selectedItems
         }
     }
 }
@@ -137,7 +160,7 @@ extension SearchViewController: UITextFieldDelegate {
 
 extension SearchViewController: SearchScreenProtocol {
     func actionFilterButton() {
-        navigationController?.popToRootViewController(animated: true)
+        print(#function)
     }
     
     func actionCleanButton() {
@@ -167,7 +190,7 @@ extension SearchViewController: SearchScreenProtocol {
         ]
         attributedYearText.addAttributes(attributesYear, range: NSRange(location: 0, length: attributedYearText.length))
         screen?.yearLabel.attributedText = attributedYearText
-
+        
         //atributos do campo cor
         let attributedColorText = NSMutableAttributedString(string: "Filtrar por cor")
         let attributesColor: [NSAttributedString.Key: Any] = [

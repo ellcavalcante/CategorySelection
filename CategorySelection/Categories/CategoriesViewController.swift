@@ -4,8 +4,10 @@
 //
 //  Created by Ellington Cavalcante on 22/09/23.
 //
+
 protocol CategoriesViewControllerDelegate: AnyObject {
-    func didSelectItems(_ selectedItems: [String], forCategory category: String)
+    func didSelectItems(_ selectedItems: [ItemModel], forCategory category: String)
+    func emptySelectItems(_ selectedItems: [ItemModel], forCategory category: String)
 }
 
 import UIKit
@@ -15,21 +17,21 @@ class CategoriesViewController: UIViewController {
     weak var delegate: CategoriesViewControllerDelegate?
     
     var screen: CategoriesScreen?
-    var searchVC: SearchViewController = SearchViewController()
-    var dataArray: [ItensModel] = []
-    
+    var dataArray: [ItemModel] = []
     var titleLabel: String
-    var selectedItems: [String] = []
-    var cell: ItensTableViewCell = ItensTableViewCell()
+    var selectedItems: [ItemModel] = []
+    var rowsItems: [ItemModel] = []
     
     var selectedItemsCount: Int {
         return selectedItems.count
     }
-
-    init(titleLabel: String, dataArray: [ItensModel]) {
+    
+    init(titleLabel: String, dataArray: [ItemModel], rowsItems: [ItemModel], selectedItems: [ItemModel]) {
         
         self.titleLabel = titleLabel
         self.dataArray = dataArray
+        self.rowsItems = rowsItems
+        self.selectedItems = selectedItems
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,17 +50,20 @@ class CategoriesViewController: UIViewController {
         screen?.titleLabel.text = titleLabel
         screen?.configTableViewProtocols(delegate: self, dataSource: self)
         screen?.itensTableView.allowsMultipleSelection = true
+        updateButtonTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
     }
     
     func updateButtonTitle() {
         let title = "Aplicar (\(selectedItemsCount))"
         screen?.applyButton.setTitle(title, for: .normal)
     }
+    
 }
 
 extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -69,7 +74,24 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItensTableViewCell.identifier, for: indexPath) as? ItensTableViewCell
         cell?.setUpCell(data: dataArray[indexPath.row])
+        let item = dataArray[indexPath.row]
+        
+        // Check if the item's id exists in rowsItems
+        if rowsItems.contains(where: { $0.id == item.id }) {
+            // Item is in rowsItems
+            cell?.checkEmptyView.isHidden = true
+            cell?.checkFilledView.isHidden = false
+            cell?.filledView.isHidden = false
+        } else {
+            // Item is not in rowsItems
+            cell?.checkEmptyView.isHidden = false
+            cell?.checkFilledView.isHidden = true
+            cell?.filledView.isHidden = true
+        }
+        
+        cell?.setUpCell(data: item)
         cell?.selectionStyle = .none
+        
         return cell ?? UITableViewCell()
     }
     
@@ -78,10 +100,11 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.checkEmptyView.isHidden = true
             cell.checkFilledView.isHidden = false
             cell.filledView.isHidden = false
-            let selectedItem = dataArray[indexPath.row].itens
+            let selectedItem = dataArray[indexPath.row]
             selectedItems.append(selectedItem)
             updateButtonTitle()
             print("\(selectedItems)")
+            
         }
     }
     
@@ -90,7 +113,7 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.checkEmptyView.isHidden = false
             cell.checkFilledView.isHidden = true
             cell.filledView.isHidden = true
-            let deselectedItem = dataArray[indexPath.row].itens
+            let deselectedItem = dataArray[indexPath.row]
             if let index = selectedItems.firstIndex(of: deselectedItem) {
                 selectedItems.remove(at: index)
                 updateButtonTitle()
@@ -99,8 +122,6 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
-
 
 func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 55
@@ -120,6 +141,7 @@ extension CategoriesViewController: CategoriesScreenProtocol {
             present(alertController, animated: true, completion: nil)
         } else {
             selectedItems.removeAll()
+            rowsItems.removeAll()
             updateButtonTitle()
             if let visibleCells = screen?.itensTableView.visibleCells as? [ItensTableViewCell] {
                 for cell in visibleCells {
@@ -133,8 +155,16 @@ extension CategoriesViewController: CategoriesScreenProtocol {
         }
     }
     
-    func actionFilterButton() {
-        delegate?.didSelectItems(selectedItems, forCategory: titleLabel)
+    func actionApplyButton() {
+        if selectedItems.isEmpty {
+            delegate?.emptySelectItems([], forCategory: titleLabel)
             navigationController?.popViewController(animated: true)
+        } else {
+            delegate?.didSelectItems(selectedItems, forCategory: titleLabel)
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
+
+
+
