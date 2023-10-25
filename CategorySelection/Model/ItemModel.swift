@@ -9,8 +9,17 @@ import UIKit
 
 struct ItemModel {
     var name: String
-    var id: Int?
+    var id: Int
+    var modelos: [Modelos]
 
+}
+
+struct Modelos {
+    var id: Int
+    var name: String
+    var releaseYear: Int
+    var engine: String
+    
 }
 
 extension ItemModel: Equatable {

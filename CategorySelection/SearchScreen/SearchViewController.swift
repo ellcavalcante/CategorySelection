@@ -49,11 +49,52 @@ class SearchViewController: UIViewController {
     }
     
     @objc func brandViewTapped() {
-        let arrayToPass: [ItemModel] = [ItemModel(name: "Toyota", id: 1),
-                                         ItemModel(name: "Ford", id: 2),
-                                         ItemModel(name: "Volkswagen", id: 3),
-                                         ItemModel(name: "Honda", id: 4)]
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass, rowsItems: brandSelectedItems, selectedItems: brandSelectedItems)
+        let arrayToPass: [ItemModel] = [ItemModel(name: "Toyota", id: 1, modelos:
+                                                    [Modelos(id: 101, name: "Corolla", releaseYear: 1966, engine: "4 Cilindros"),
+                                                     Modelos(id: 102, name: "Camry", releaseYear: 1982, engine: "V6"),
+                                                     Modelos(id: 103, name: "Rav4", releaseYear: 1994, engine: "4 Cilindros"),
+                                                     Modelos(id: 104, name: "Highlander", releaseYear: 2001, engine: "V6"),
+                                                     Modelos(id: 105, name: "Prius", releaseYear: 1997, engine: "Híbrido"),
+                                                     Modelos(id: 106, name: "Corolla Cross", releaseYear: 2020, engine: "4 Cilindros"),
+                                                     Modelos(id: 107, name: "C-HR", releaseYear: 2016, engine: "4 Cilindros"),
+                                                     Modelos(id: 108, name: "Land Cruiser", releaseYear: 1951, engine: "V8"),
+                                                     Modelos(id: 109, name: "Yaris", releaseYear: 1999, engine: "4 Cilindros"),
+                                                     Modelos(id: 110, name: "Tacoma", releaseYear: 1995, engine: "V6")]),
+                                        
+                                        ItemModel(name: "Ford", id: 2, modelos:
+                                                    [Modelos(id: 201, name: "F-150", releaseYear: 1975, engine: "V6"),
+                                                     Modelos(id: 202, name: "Mustang", releaseYear: 1964, engine: "V8"),
+                                                     Modelos(id: 203, name: "Explorer", releaseYear: 1990, engine: "4 cilindros"),
+                                                     Modelos(id: 204, name: "Escape", releaseYear: 2000, engine: "4 Cilindros"),
+                                                     Modelos(id: 205, name: "Edge", releaseYear: 2006, engine: "V6"),
+                                                     Modelos(id: 206, name: "Focus", releaseYear: 1998, engine: "4 Cilindros"),
+                                                     Modelos(id: 207, name: "Expedition", releaseYear: 1996, engine: "V8"),
+                                                     Modelos(id: 208, name: "Fiesta", releaseYear: 1976, engine: "4 cilindros"),
+                                                     Modelos(id: 209, name: "Ranger", releaseYear: 1983, engine: "4 cilindros"),
+                                                     Modelos(id: 210, name: "Bronco", releaseYear: 1965, engine: "V6")]),
+                                        
+                                        ItemModel(name: "Volkswagen", id: 3, modelos:
+                                                    [Modelos(id: 301, name: "Golf", releaseYear: 1974, engine: "4 cilindros"),
+                                                     Modelos(id: 302, name: "Passat", releaseYear: 1973, engine: "4 cilindros"),
+                                                     Modelos(id: 303, name: "Tiguan", releaseYear: 2007, engine: "4 cilindros"),
+                                                     Modelos(id: 304, name: "Jetta", releaseYear: 1979, engine: "4 Cilindros"),
+                                                     Modelos(id: 305, name: "Atlas", releaseYear: 2017, engine: "V6"),
+                                                     Modelos(id: 306, name: "Arteon", releaseYear: 2017, engine: "4 Cilindros"),
+                                                     Modelos(id: 307, name: "Polo", releaseYear: 1975, engine: "4 Cilindros"),
+                                                     Modelos(id: 308, name: "Taos", releaseYear: 2020, engine: "4 cilindros"),
+                                                     Modelos(id: 309, name: "ID.3", releaseYear: 2020, engine: "Elétrico"),
+                                                     Modelos(id: 310, name: "Touareg", releaseYear: 2002, engine: "V6")]),
+                                        
+                                        ItemModel(name: "Honda", id: 4, modelos:
+                                                    [Modelos(id: 401, name: "Civic", releaseYear: 1972, engine: "4 cilindros"),
+                                                     Modelos(id: 402, name: "Accord", releaseYear: 1976, engine: "4 cilindros"),
+                                                     Modelos(id: 403, name: "CR-V", releaseYear: 1995, engine: "4 cilindros"),
+                                                     Modelos(id: 404, name: "Fit", releaseYear: 2001, engine: "4 Cilindros"),
+                                                     Modelos(id: 405, name: "Pilot", releaseYear: 2002, engine: "V6"),
+                                                     Modelos(id: 406, name: "HR-V", releaseYear: 1998, engine: "4 Cilindros"),
+                                                     Modelos(id: 407, name: "Odyssey", releaseYear: 1994, engine: "V6")])]
+                                        
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: arrayToPass, selectedItems: brandSelectedItems)
         screenCategories.delegate = self
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
@@ -78,17 +119,18 @@ class SearchViewController: UIViewController {
     }
     
     @objc func colorViewTapped() {
-        let arrayColorToPass: [ItemModel] = [ItemModel(name: "Branco", id: 1),
-                                             ItemModel(name: "Preto", id: 2),
-                                             ItemModel(name: "Prata", id: 3),
-                                             ItemModel(name: "Cinza", id: 4),
-                                             ItemModel(name: "Azul", id: 5),
-                                             ItemModel(name: "Vermelho", id: 6),
-                                             ItemModel(name: "Verde", id: 7),
-                                             ItemModel(name: "Amarelo", id: 8),
-                                             ItemModel(name: "Laranja", id: 9),
-                                             ItemModel(name: "Marrom", id: 10)]
-                let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayColorToPass, rowsItems: colorSelectedItems, selectedItems: colorSelectedItems)
+        let arrayColorToPass: [ItemModel] = []
+//        ItemModel(name: "Branco", id: 1),
+//                                             ItemModel(name: "Preto", id: 2),
+//                                             ItemModel(name: "Prata", id: 3),
+//                                             ItemModel(name: "Cinza", id: 4),
+//                                             ItemModel(name: "Azul", id: 5),
+//                                             ItemModel(name: "Vermelho", id: 6),
+//                                             ItemModel(name: "Verde", id: 7),
+//                                             ItemModel(name: "Amarelo", id: 8),
+//                                             ItemModel(name: "Laranja", id: 9),
+//                                             ItemModel(name: "Marrom", id: 10)
+                let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: arrayColorToPass, selectedItems: colorSelectedItems)
                 screenCategories.delegate = self
                 self.navigationController?.pushViewController(screenCategories, animated: true)
     }
