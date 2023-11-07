@@ -6,8 +6,8 @@
 //
 
 protocol CategoriesViewControllerDelegate: AnyObject {
-    func didSelectItems(_ selectedItems: [ItemModel], forCategory category: String)
-    func emptySelectItems(_ selectedItems: [ItemModel], forCategory category: String)
+    func didSelectItems(_ selectedItems: [DataModel], forCategory category: String)
+    func emptySelectItems(_ selectedItems: [DataModel], forCategory category: String)
 }
 
 import UIKit
@@ -17,20 +17,18 @@ class CategoriesViewController: UIViewController {
     weak var delegate: CategoriesViewControllerDelegate?
     
     var screen: CategoriesScreen?
-    var dataArray: [ItemModel] = []
+    var dataArray: [DataModel] = []
     var titleLabel: String
-    var selectedItems: [ItemModel] = []
-//    var rowsItems: [ItemModel] = []
+    var selectedItems: [DataModel] = []
     
     var selectedItemsCount: Int {
         return selectedItems.count
     }
     
-    init(titleLabel: String, dataArray: [ItemModel], selectedItems: [ItemModel]) {
+    init(titleLabel: String, dataArray: [DataModel], selectedItems: [DataModel]) {
         
         self.titleLabel = titleLabel
         self.dataArray = dataArray
-//        self.rowsItems = rowsItems
         self.selectedItems = selectedItems
         super.init(nibName: nil, bundle: nil)
     }
@@ -77,14 +75,14 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.setUpCell(data: dataArray[indexPath.row])
         let item = dataArray[indexPath.row]
         
-        // Check if the item's id exists in rowsItems
+        // Verifica se o id do item existe em selectedItems
         if selectedItems.contains(where: { $0.id == item.id }) {
-            // Item is in rowsItems
+            // O item está em selectedItems
             cell?.checkEmptyView.isHidden = true
             cell?.checkFilledView.isHidden = false
             cell?.filledView.isHidden = false
         } else {
-            // Item is not in rowsItems
+            // O item não está em selectedItems
             cell?.checkEmptyView.isHidden = false
             cell?.checkFilledView.isHidden = true
             cell?.filledView.isHidden = true
@@ -97,33 +95,10 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        if let cell = tableView.cellForRow(at: indexPath) as? ItensTableViewCell {
-        //            let selectedItem = dataArray[indexPath.row]
-        //            if !selectedItems.contains(where: { $0.id == selectedItem.id }) {
-        //                selectedItems.append(selectedItem)
-        //                cell.checkEmptyView.isHidden = true
-        //                cell.checkFilledView.isHidden = false
-        //                cell.filledView.isHidden = false
-        //                updateButtonTitle()
-        //                print("\(selectedItems)")
-        //                screen?.itensTableView.reloadData()
-        //            } else {
-        //                // Se o item já estiver no array selectedItems, posso removê-lo ou não fazer nada.
-        //                // Aqui eu removo.
-        //                if let index = selectedItems.firstIndex(where: { $0.id == selectedItem.id }) {
-        //                    selectedItems.remove(at: index)
-        //                }
-        //                cell.checkEmptyView.isHidden = false
-        //                cell.checkFilledView.isHidden = true
-        //                cell.filledView.isHidden = true
-        //                updateButtonTitle()
-        //                print("\(selectedItems)")
-        //            }
-        //        }
         if let cell = tableView.cellForRow(at: indexPath) as? ItensTableViewCell {
             let selectedItem = dataArray[indexPath.row]
             if selectedItems.contains(where: { $0.id == selectedItem.id }) {
-                // Item is already selected, so remove it.
+                // O item já está selecionado, então remova-o.
                 if let index = selectedItems.firstIndex(where: { $0.id == selectedItem.id }) {
                     selectedItems.remove(at: index)
                 }
@@ -131,12 +106,13 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.checkFilledView.isHidden = true
                 cell.filledView.isHidden = true
             } else {
-                // Item is not selected, so add it.
+                // O item não está selecionado, então adicione-o.
                 selectedItems.append(selectedItem)
                 cell.checkEmptyView.isHidden = true
                 cell.checkFilledView.isHidden = false
                 cell.filledView.isHidden = false
             }
+            
             updateButtonTitle()
             screen?.itensTableView.reloadData()
             print("\(selectedItems)")
@@ -147,18 +123,14 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.cellForRow(at: indexPath) as? ItensTableViewCell {
             let deselectedItem = dataArray[indexPath.row]
             if let index = selectedItems.firstIndex(where: { $0.id == deselectedItem.id }) {
-                // If the item is in the selectedItems array, remove it.
+                // Se o item estiver no array selectedItems, remova-o.
                 selectedItems.remove(at: index)
             }
             cell.checkEmptyView.isHidden = false
             cell.checkFilledView.isHidden = true
             cell.filledView.isHidden = true
-            //            let deselectedItem = dataArray[indexPath.row]
-            //            if let index = selectedItems.firstIndex(of: deselectedItem) {
-            //                selectedItems.remove(at: index)
             updateButtonTitle()
             print("\(selectedItems)")
-            //            }
         }
     }
 }
@@ -181,7 +153,6 @@ extension CategoriesViewController: CategoriesScreenProtocol {
             present(alertController, animated: true, completion: nil)
         } else {
             selectedItems.removeAll()
-//            rowsItems.removeAll()
             updateButtonTitle()
             if let visibleCells = screen?.itensTableView.visibleCells as? [ItensTableViewCell] {
                 for cell in visibleCells {
@@ -205,6 +176,7 @@ extension CategoriesViewController: CategoriesScreenProtocol {
         }
     }
 }
+
 
 
 

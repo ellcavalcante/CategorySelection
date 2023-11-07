@@ -7,6 +7,7 @@
 
 import UIKit
 
-struct EngineModel {
-    var engine: String
+struct DataModel {
+    let id: Int
+    let nome: String
 }

@@ -71,8 +71,8 @@ class ItensTableViewCell: UITableViewCell {
         setUpConstraints()
     }
     
-    public func setUpCell(data: ItemModel) {
-        self.itensLabel.text = data.name
+    public func setUpCell(data: DataModel) {
+        self.itensLabel.text = data.nome
     }
     
     private func setUpConstraints() {
