@@ -8,5 +8,5 @@
 import UIKit
 
 struct ColorModel {
-    var color: String
+    var nameColor: String
 }

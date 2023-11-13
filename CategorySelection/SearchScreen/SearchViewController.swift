@@ -11,7 +11,10 @@ class SearchViewController: UIViewController {
     
     var screen: SearchScreen?
     var brandSelectedItems: [ItemModel] = []
-    var colorSelectedItems: [ItemModel] = []
+    var engineSelectedItems: [DataModel] = []
+    var yearSelectedItems: [DataModel] = []
+    var colorSelectedItems: [DataModel] = []
+    
     var arrayToPass: [ItemModel] = [ItemModel(name: "Toyota", id: 1, modelos:
                                                 [Modelos(id: 101, name: "Corolla", releaseYear: 1966, engine: "4 Cilindros"),
                                                  Modelos(id: 102, name: "Camry", releaseYear: 1982, engine: "V6"),
@@ -27,36 +30,46 @@ class SearchViewController: UIViewController {
                                     ItemModel(name: "Ford", id: 2, modelos:
                                                 [Modelos(id: 201, name: "F-150", releaseYear: 1975, engine: "V6"),
                                                  Modelos(id: 202, name: "Mustang", releaseYear: 1964, engine: "V8"),
-                                                 Modelos(id: 203, name: "Explorer", releaseYear: 1990, engine: "4 cilindros"),
+                                                 Modelos(id: 203, name: "Explorer", releaseYear: 1990, engine: "4 Cilindros"),
                                                  Modelos(id: 204, name: "Escape", releaseYear: 2000, engine: "4 Cilindros"),
                                                  Modelos(id: 205, name: "Edge", releaseYear: 2006, engine: "V6"),
                                                  Modelos(id: 206, name: "Focus", releaseYear: 1998, engine: "4 Cilindros"),
                                                  Modelos(id: 207, name: "Expedition", releaseYear: 1996, engine: "V8"),
-                                                 Modelos(id: 208, name: "Fiesta", releaseYear: 1976, engine: "4 cilindros"),
-                                                 Modelos(id: 209, name: "Ranger", releaseYear: 1983, engine: "4 cilindros"),
+                                                 Modelos(id: 208, name: "Fiesta", releaseYear: 1976, engine: "4 Cilindros"),
+                                                 Modelos(id: 209, name: "Ranger", releaseYear: 1983, engine: "4 Cilindros"),
                                                  Modelos(id: 210, name: "Bronco", releaseYear: 1965, engine: "V6")]),
                                     
                                     ItemModel(name: "Volkswagen", id: 3, modelos:
-                                                [Modelos(id: 301, name: "Golf", releaseYear: 1974, engine: "4 cilindros"),
-                                                 Modelos(id: 302, name: "Passat", releaseYear: 1973, engine: "4 cilindros"),
-                                                 Modelos(id: 303, name: "Tiguan", releaseYear: 2007, engine: "4 cilindros"),
+                                                [Modelos(id: 301, name: "Golf", releaseYear: 1974, engine: "4 Cilindros"),
+                                                 Modelos(id: 302, name: "Passat", releaseYear: 1973, engine: "4 Cilindros"),
+                                                 Modelos(id: 303, name: "Tiguan", releaseYear: 2007, engine: "4 Cilindros"),
                                                  Modelos(id: 304, name: "Jetta", releaseYear: 1979, engine: "4 Cilindros"),
                                                  Modelos(id: 305, name: "Atlas", releaseYear: 2017, engine: "V6"),
                                                  Modelos(id: 306, name: "Arteon", releaseYear: 2017, engine: "4 Cilindros"),
                                                  Modelos(id: 307, name: "Polo", releaseYear: 1975, engine: "4 Cilindros"),
-                                                 Modelos(id: 308, name: "Taos", releaseYear: 2020, engine: "4 cilindros"),
+                                                 Modelos(id: 308, name: "Taos", releaseYear: 2020, engine: "4 Cilindros"),
                                                  Modelos(id: 309, name: "ID.3", releaseYear: 2020, engine: "Elétrico"),
                                                  Modelos(id: 310, name: "Touareg", releaseYear: 2002, engine: "V6")]),
                                     
                                     ItemModel(name: "Honda", id: 4, modelos:
-                                                [Modelos(id: 401, name: "Civic", releaseYear: 1972, engine: "4 cilindros"),
-                                                 Modelos(id: 402, name: "Accord", releaseYear: 1976, engine: "4 cilindros"),
-                                                 Modelos(id: 403, name: "CR-V", releaseYear: 1995, engine: "4 cilindros"),
+                                                [Modelos(id: 401, name: "Civic", releaseYear: 1972, engine: "4 Cilindros"),
+                                                 Modelos(id: 402, name: "Accord", releaseYear: 1976, engine: "4 Cilindros"),
+                                                 Modelos(id: 403, name: "CR-V", releaseYear: 1995, engine: "4 Cilindros"),
                                                  Modelos(id: 404, name: "Fit", releaseYear: 2001, engine: "4 Cilindros"),
                                                  Modelos(id: 405, name: "Pilot", releaseYear: 2002, engine: "V6"),
                                                  Modelos(id: 406, name: "HR-V", releaseYear: 1998, engine: "4 Cilindros"),
                                                  Modelos(id: 407, name: "Odyssey", releaseYear: 1994, engine: "V6")])]
-    var brandSelected = false
+    
+    var arrayColorTest: [ColorModel] = [ColorModel(nameColor: "Branco"),
+                                        ColorModel(nameColor: "Preto"),
+                                        ColorModel(nameColor: "Prata"),
+                                        ColorModel(nameColor: "Cinza"),
+                                        ColorModel(nameColor: "Azul"),
+                                        ColorModel(nameColor: "Vermelho"),
+                                        ColorModel(nameColor: "Verde"),
+                                        ColorModel(nameColor: "Amarelo"),
+                                        ColorModel(nameColor: "Laranja"),
+                                        ColorModel(nameColor: "Marrom")]
     
     override func loadView() {
         screen = SearchScreen()
@@ -104,13 +117,10 @@ class SearchViewController: UIViewController {
         
         let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: dataArray, selectedItems: marcasSelecionadas)
         screenCategories.delegate = self
-        brandSelected = true
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
-    
     @objc func engineViewTapped() {
-        
         guard !brandSelectedItems.isEmpty else {
             let alertController = UIAlertController(
                 title: " ATENÇÃO ",
@@ -123,36 +133,29 @@ class SearchViewController: UIViewController {
             return
         }
         
-        var dataMotor: [String] = []
+        var dataMotorSelect: [String] = []
+        
         for marca in brandSelectedItems {
             for modelo in marca.modelos {
-                if !dataMotor.contains(where: { model in
+                if !dataMotorSelect.contains(where: { model in
                     modelo.engine == model
                 }) {
-                    dataMotor.append(modelo.engine)
+                    dataMotorSelect.append(modelo.engine)
                 }
             }
         }
-
         
-        let listaDeMotores = dataMotor.enumerated().map { index, engine in
+        let listaDeMotoresSelecionados = dataMotorSelect.enumerated().map { index, engine in
             DataModel(id: index, nome: engine)
         }
         
-        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.brandTitleLabel.text ?? "", dataArray: listaDeMotores, selectedItems: [])
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.engineTitleLabel.text ?? "", dataArray: listaDeMotoresSelecionados, selectedItems: engineSelectedItems)
         screenCategories.delegate = self
-        brandSelected = true
         self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func yearViewTapped() {
-        //            let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: arrayToPass)
-        //            screenCategories.delegate = self
-        //            self.navigationController?.pushViewController(screenCategories, animated: true)
-        //        }
-        if brandSelected {
-           
-        } else {
+        guard !brandSelectedItems.isEmpty else {
             let alertController = UIAlertController(
                 title: " ATENÇÃO ",
                 message: "Você deve selecionar uma marca antes de selecionar o ano.",
@@ -161,24 +164,52 @@ class SearchViewController: UIViewController {
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
+            return
         }
+        
+        var dataYear: [String] = []
+        
+        for marca in brandSelectedItems {
+            for ano in marca.modelos {
+                if !dataYear.contains(where: { model in
+                    String(ano.releaseYear) == model
+                }) {
+                    dataYear.append(String(ano.releaseYear))
+                }
+            }
+        }
+        
+        var listaDeAnos: [DataModel] = []
+        
+        listaDeAnos = dataYear.enumerated().map { index, ano in
+            let updatedYear = ano.hasSuffix("0") ? ano : String(ano.dropLast()) + "0"
+            return updatedYear
+        }
+        .uniqued()
+        .enumerated()
+        .map { index, updatedYear in
+            return DataModel(id: index, nome: updatedYear)
+        }
+        
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.yearTitleLabel.text ?? "", dataArray: listaDeAnos, selectedItems: yearSelectedItems)
+        screenCategories.delegate = self
+        self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func colorViewTapped() {
-        let arrayColorToPass: [ItemModel] = [ItemModel(name: "Branco"),
-                                             ItemModel(name: "Preto"),
-                                             ItemModel(name: "Prata"),
-                                             ItemModel(name: "Cinza"),
-                                             ItemModel(name: "Azul"),
-                                             ItemModel(name: "Vermelho"),
-                                             ItemModel(name: "Verde"),
-                                             ItemModel(name: "Amarelo"),
-                                             ItemModel(name: "Laranja"),
-                                             ItemModel(name: "Marrom")]
         
-                let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: [], selectedItems: [])
-                screenCategories.delegate = self
-                self.navigationController?.pushViewController(screenCategories, animated: true)
+        var dataColor: [String] = []
+        for cor in arrayColorTest {
+            dataColor.append(cor.nameColor)
+        }
+        
+        let dataColorModel = dataColor.enumerated().map { index, color in
+            DataModel(id: index, nome: color)
+        }
+        
+        let screenCategories: CategoriesViewController = CategoriesViewController(titleLabel: screen?.colorTitleLabel.text ?? "", dataArray: dataColorModel, selectedItems: colorSelectedItems)
+        screenCategories.delegate = self
+        self.navigationController?.pushViewController(screenCategories, animated: true)
     }
     
     @objc func dismissKeyboard() {
@@ -197,6 +228,7 @@ extension SearchViewController: CategoriesViewControllerDelegate {
                 }
             }
             brandSelectedItems = marcasSelecionadas
+            
             if marcasSelecionadas.isEmpty {
                 let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
                 let attributes: [NSAttributedString.Key: Any] = [
@@ -206,57 +238,148 @@ extension SearchViewController: CategoriesViewControllerDelegate {
                 attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
                 screen?.brandLabel.attributedText = attributedText
                 screen?.pencilBrandButton.isHidden = true
-                brandSelected = false
             } else {
                 let selectedItemsText = marcasSelecionadas.map { $0.name }.joined(separator: "\n\n")
                 screen?.brandLabel.text = selectedItemsText
                 screen?.brandLabel.textColor = UIColor.black
                 screen?.pencilBrandButton.isHidden = false
-                
             }
-//        } else if category == screen?.engineTitleLabel.text {
-//            let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
-//            screen?.engineLabel.text = selectedItemsText
-//            screen?.engineLabel.textColor = UIColor.black
-//            screen?.pencilEngineButton.isHidden = false
-//        } else if category == screen?.yearTitleLabel.text {
-//            let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
-//            screen?.yearLabel.text = selectedItemsText
-//            screen?.yearLabel.textColor = UIColor.black
-//            screen?.pencilYearButton.isHidden = false
-//        } else {
-//            let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
-//            screen?.colorLabel.text = selectedItemsText
-//            screen?.colorLabel.textColor = UIColor.black
-//            screen?.pencilColorButton.isHidden = false
-//            colorSelectedItems = selectedItems
+        }
+        
+        if category == screen?.engineTitleLabel.text {
+            var engineList: [String] = []
+            for engine in brandSelectedItems {
+                for motor in engine.modelos {
+                    engineList.append(motor.engine)
+                }
+            }
+            
+            let transformEngine = engineList.enumerated().map { index, engine in
+                DataModel(id: index, nome: engine)
+            }
+            
+            let motoresSelecionadas = transformEngine.filter { engine in
+                selectedItems.contains { model in
+                    engine.id == model.id
+                }
+            }
+            
+            engineSelectedItems = motoresSelecionadas
+            
+            if selectedItems.isEmpty {
+                let attributedText = NSMutableAttributedString(string: "Filtrar por motor")
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 12),
+                    .foregroundColor: UIColor.systemGray,
+                ]
+                attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+                screen?.engineLabel.attributedText = attributedText
+                screen?.pencilEngineButton.isHidden = true
+            } else {
+                let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
+                screen?.engineLabel.text = selectedItemsText
+                screen?.engineLabel.textColor = UIColor.black
+                screen?.pencilEngineButton.isHidden = false
+            }
+        }
+        
+        if category == screen?.yearTitleLabel.text {
+            var yearList: [String] = []
+            for year in brandSelectedItems {
+                for ano in year.modelos {
+                    yearList.append(String(ano.releaseYear))
+                }
+            }
+            
+            let transformYear = yearList.enumerated().map { index, year in
+                DataModel(id: index, nome: year)
+            }
+            
+            let yearSelecionados = transformYear.filter { ano in
+                selectedItems.contains { model in
+                    ano.id == model.id
+                }
+            }
+            
+            yearSelectedItems = yearSelecionados
+            
+            if selectedItems.isEmpty {
+                let attributedText = NSMutableAttributedString(string: "Filtrar por ano")
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 12),
+                    .foregroundColor: UIColor.systemGray,
+                ]
+                attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+                screen?.yearLabel.attributedText = attributedText
+                screen?.pencilYearButton.isHidden = true
+            } else {
+                let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
+                screen?.yearLabel.text = selectedItemsText
+                screen?.yearLabel.textColor = UIColor.black
+                screen?.pencilYearButton.isHidden = false
+            }
+        }
+        
+        if category == screen?.colorTitleLabel.text {
+            var color: [String] = []
+            for cor in arrayColorTest {
+                color.append(cor.nameColor)
+            }
+            
+            let transformColor = color.enumerated().map { index, color in
+                DataModel(id: index, nome: color)
+            }
+            
+            let coresSelecionadas = transformColor.filter { cor in
+                selectedItems.contains { model in
+                    cor.id == model.id
+                }
+            }
+            
+            colorSelectedItems = coresSelecionadas
+            
+            if selectedItems.isEmpty {
+                let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 12),
+                    .foregroundColor: UIColor.systemGray,
+                ]
+                attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+                screen?.colorLabel.attributedText = attributedText
+                screen?.pencilColorButton.isHidden = true
+            } else {
+                let selectedItemsText = selectedItems.map { $0.nome }.joined(separator: "\n\n")
+                screen?.colorLabel.text = selectedItemsText
+                screen?.colorLabel.textColor = UIColor.black
+                screen?.pencilColorButton.isHidden = false
+            }
         }
     }
     
     func emptySelectItems(_ selectedItems: [DataModel], forCategory category: String) {
         didSelectItems(selectedItems, forCategory: category)
-//        if category == screen?.brandTitleLabel.text && selectedItems == [] {
-//            let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
-//            let attributes: [NSAttributedString.Key: Any] = [
-//                .font: UIFont.systemFont(ofSize: 12),
-//                .foregroundColor: UIColor.systemGray,
-//            ]
-//            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
-//            screen?.brandLabel.attributedText = attributedText
-//            screen?.pencilBrandButton.isHidden = true
-//            brandSelectedItems = selectedItems
-//            brandSelected = false
-//        } else if category == screen?.colorTitleLabel.text && selectedItems == [] {
-//            let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
-//            let attributes: [NSAttributedString.Key: Any] = [
-//                .font: UIFont.systemFont(ofSize: 12),
-//                .foregroundColor: UIColor.systemGray,
-//            ]
-//            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
-//            screen?.colorLabel.attributedText = attributedText
-//            screen?.pencilColorButton.isHidden = true
-//            colorSelectedItems = selectedItems
-//        }
+        //        if category == screen?.brandTitleLabel.text && selectedItems == [] {
+        //            let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
+        //            let attributes: [NSAttributedString.Key: Any] = [
+        //                .font: UIFont.systemFont(ofSize: 12),
+        //                .foregroundColor: UIColor.systemGray,
+        //            ]
+        //            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        //            screen?.brandLabel.attributedText = attributedText
+        //            screen?.pencilBrandButton.isHidden = true
+        //            brandSelectedItems = selectedItems
+        //            brandSelected = false
+        //        } else if category == screen?.colorTitleLabel.text && selectedItems == [] {
+        //            let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
+        //            let attributes: [NSAttributedString.Key: Any] = [
+        //                .font: UIFont.systemFont(ofSize: 12),
+        //                .foregroundColor: UIColor.systemGray,
+        //            ]
+        //            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
+        //            screen?.colorLabel.attributedText = attributedText
+        //            screen?.pencilColorButton.isHidden = true
+        //            colorSelectedItems = selectedItems
+        //        }
     }
 }
 
@@ -318,10 +441,16 @@ extension SearchViewController: SearchScreenProtocol {
         screen?.pencilYearButton.isHidden = true
         screen?.pencilColorButton.isHidden = true
         
-        brandSelected = false
     }
     
     func actionBackButton() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
     }
 }
