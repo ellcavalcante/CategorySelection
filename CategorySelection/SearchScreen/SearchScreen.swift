@@ -102,7 +102,6 @@ class SearchScreen: UIView {
         textField.attributedPlaceholder = attributedPlaceholder
         textField.textColor = .darkGray
         textField.clearButtonMode = .whileEditing
-        //        textField.addTarget(self, action: #selector(validateTextFields), for: .editingChanged)
         textField.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         return textField
     }()

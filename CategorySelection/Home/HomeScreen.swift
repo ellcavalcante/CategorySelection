@@ -11,7 +11,7 @@ protocol ScreenProtocol: AnyObject {
     func actionSearchButton()
 }
 
-class Screen: UIView {
+class HomeScreen: UIView {
     
     var delegate: ScreenProtocol?
     
@@ -38,7 +38,7 @@ class Screen: UIView {
         return label
     }()
     
-    private lazy var searchJsonLabel: UILabel = {
+    public lazy var searchJsonLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "JSON de busca"
@@ -59,12 +59,13 @@ class Screen: UIView {
         return label
     }()
     
-    private lazy var inputJsonLabel: UILabel = {
+    public lazy var inputJsonLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "{}"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -101,7 +102,7 @@ class Screen: UIView {
         addSubview(titleLabel)
         addSubview(searchJsonLabel)
         addSubview(JSONLabel)
-        addSubview(inputJsonLabel)
+        JSONLabel.addSubview(inputJsonLabel)
         addSubview(openSearchButton)
         setUpConstraints()
         backgroundColor()
@@ -130,12 +131,12 @@ class Screen: UIView {
             JSONLabel.topAnchor.constraint(equalTo: searchJsonLabel.bottomAnchor, constant: 12),
             JSONLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             JSONLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            JSONLabel.heightAnchor.constraint(equalToConstant: 254),
+            JSONLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 254),
             
             inputJsonLabel.topAnchor.constraint(equalTo: JSONLabel.topAnchor, constant: 12),
             inputJsonLabel.leadingAnchor.constraint(equalTo: JSONLabel.leadingAnchor, constant: 12),
             inputJsonLabel.trailingAnchor.constraint(equalTo: JSONLabel.trailingAnchor, constant: -12),
-            
+            inputJsonLabel.bottomAnchor.constraint(equalTo: JSONLabel.bottomAnchor, constant: -12),
             
             openSearchButton.topAnchor.constraint(equalTo: JSONLabel.bottomAnchor, constant: 36),
             openSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

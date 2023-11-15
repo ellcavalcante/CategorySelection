@@ -7,7 +7,6 @@
 
 protocol CategoriesViewControllerDelegate: AnyObject {
     func didSelectItems(_ selectedItems: [DataModel], forCategory category: String)
-    func emptySelectItems(_ selectedItems: [DataModel], forCategory category: String)
 }
 
 import UIKit
@@ -18,8 +17,8 @@ class CategoriesViewController: UIViewController {
     
     var screen: CategoriesScreen?
     var dataArray: [DataModel] = []
-    var titleLabel: String
     var selectedItems: [DataModel] = []
+    var titleLabel: String
     
     var selectedItemsCount: Int {
         return selectedItems.count
@@ -167,13 +166,8 @@ extension CategoriesViewController: CategoriesScreenProtocol {
     }
     
     func actionApplyButton() {
-        if selectedItems.isEmpty {
-            delegate?.emptySelectItems([], forCategory: titleLabel)
-            navigationController?.popViewController(animated: true)
-        } else {
-            delegate?.didSelectItems(selectedItems, forCategory: titleLabel)
-            navigationController?.popViewController(animated: true)
-        }
+        delegate?.didSelectItems(selectedItems, forCategory: titleLabel)
+        navigationController?.popViewController(animated: true)
     }
 }
 

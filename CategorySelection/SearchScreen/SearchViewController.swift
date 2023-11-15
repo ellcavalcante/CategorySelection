@@ -5,9 +5,15 @@
 //  Created by Ellington Cavalcante on 21/09/23.
 //
 
+protocol SearchViewControllerDelegate: AnyObject {
+    func pressBotaoFiltrar(withJSONData jsonData: Data?)
+}
+
 import UIKit
 
 class SearchViewController: UIViewController {
+    
+    weak var delegate: SearchViewControllerDelegate?
     
     var screen: SearchScreen?
     var brandSelectedItems: [ItemModel] = []
@@ -355,32 +361,6 @@ extension SearchViewController: CategoriesViewControllerDelegate {
             }
         }
     }
-    
-    func emptySelectItems(_ selectedItems: [DataModel], forCategory category: String) {
-        didSelectItems(selectedItems, forCategory: category)
-        //        if category == screen?.brandTitleLabel.text && selectedItems == [] {
-        //            let attributedText = NSMutableAttributedString(string: "Filtrar por marca")
-        //            let attributes: [NSAttributedString.Key: Any] = [
-        //                .font: UIFont.systemFont(ofSize: 12),
-        //                .foregroundColor: UIColor.systemGray,
-        //            ]
-        //            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
-        //            screen?.brandLabel.attributedText = attributedText
-        //            screen?.pencilBrandButton.isHidden = true
-        //            brandSelectedItems = selectedItems
-        //            brandSelected = false
-        //        } else if category == screen?.colorTitleLabel.text && selectedItems == [] {
-        //            let attributedText = NSMutableAttributedString(string: "Filtrar por cor")
-        //            let attributes: [NSAttributedString.Key: Any] = [
-        //                .font: UIFont.systemFont(ofSize: 12),
-        //                .foregroundColor: UIColor.systemGray,
-        //            ]
-        //            attributedText.addAttributes(attributes, range: NSRange(location: 0, length: attributedText.length))
-        //            screen?.colorLabel.attributedText = attributedText
-        //            screen?.pencilColorButton.isHidden = true
-        //            colorSelectedItems = selectedItems
-        //        }
-    }
 }
 
 extension SearchViewController: UITextFieldDelegate {
@@ -389,9 +369,13 @@ extension SearchViewController: UITextFieldDelegate {
     }
 }
 
-extension SearchViewController: SearchScreenProtocol {
+extension SearchViewController: SearchScreenProtocol  {
+    
     func actionFilterButton() {
-        print(#function)
+        print("Botão pressionado")
+        let jsonData = generateJSONData()
+        delegate?.pressBotaoFiltrar(withJSONData: jsonData)
+        navigationController?.popViewController(animated: true)
     }
     
     func actionCleanButton() {
@@ -448,9 +432,44 @@ extension SearchViewController: SearchScreenProtocol {
     }
 }
 
+extension SearchViewController {
+    public func generateJSONData() -> Data? {
+        let searchData = SearchData(search: (screen?.typeSomethingTextField.text?.isEmpty ?? true ? "null" : screen?.typeSomethingTextField.text) ?? "",
+                                    advanced: AdvancedData(brand: brandSelectedItems.map { $0.id },
+                                                           engine: engineSelectedItems.map { $0.nome },
+                                                           year: yearSelectedItems.map { $0.nome },
+                                                           color: colorSelectedItems.map { $0.nome }))
+        do {
+            let searchDataDictionary = [
+                "search": searchData.search,
+                "advanced": searchData.advanced.serializable
+            ] as [String : Any]
+
+            let jsonData = try JSONSerialization.data(withJSONObject: searchDataDictionary, options: .prettyPrinted)
+            return jsonData
+        } catch {
+            print("Error encoding JSON: \(error)")
+            return nil
+        }
+    }
+}
+
+
 extension Sequence where Element: Hashable {
     func uniqued() -> [Element] {
         var seen = Set<Element>()
         return filter { seen.insert($0).inserted }
+    }
+}
+
+
+extension AdvancedData {
+    var serializable: [String: Any] {
+        return [
+            "brand": brand,
+            "engine": engine,
+            "year": year,
+            "color": color
+        ]
     }
 }
