@@ -260,17 +260,7 @@ extension SearchViewController: CategoriesViewControllerDelegate {
                 }
             }
             
-            let transformEngine = engineList.enumerated().map { index, engine in
-                DataModel(id: index, nome: engine)
-            }
-            
-            let motoresSelecionadas = transformEngine.filter { engine in
-                selectedItems.contains { model in
-                    engine.id == model.id
-                }
-            }
-            
-            engineSelectedItems = motoresSelecionadas
+            engineSelectedItems = selectedItems
             
             if selectedItems.isEmpty {
                 let attributedText = NSMutableAttributedString(string: "Filtrar por motor")
@@ -297,17 +287,12 @@ extension SearchViewController: CategoriesViewControllerDelegate {
                 }
             }
             
-            let transformYear = yearList.enumerated().map { index, year in
-                DataModel(id: index, nome: year)
+            let updatedYearSelecionados = selectedItems.map { yearModel in
+                let updatedYear = yearModel.nome.hasSuffix("0") ? yearModel.nome : String(yearModel.nome.dropLast()) + "0"
+                return DataModel(id: yearModel.id, nome: updatedYear)
             }
-            
-            let yearSelecionados = transformYear.filter { ano in
-                selectedItems.contains { model in
-                    ano.id == model.id
-                }
-            }
-            
-            yearSelectedItems = yearSelecionados
+
+            yearSelectedItems = updatedYearSelecionados
             
             if selectedItems.isEmpty {
                 let attributedText = NSMutableAttributedString(string: "Filtrar por ano")
@@ -433,19 +418,17 @@ extension SearchViewController: SearchScreenProtocol  {
 }
 
 extension SearchViewController {
-    public func generateJSONData() -> Data? {
-        let searchData = SearchData(search: (screen?.typeSomethingTextField.text?.isEmpty ?? true ? "null" : screen?.typeSomethingTextField.text) ?? "",
+    func generateJSONData() -> Data? {
+        let searchData = SearchData(search: screen?.typeSomethingTextField.text?.isEmpty ?? true ? "null" : screen?.typeSomethingTextField.text ?? "",
                                     advanced: AdvancedData(brand: brandSelectedItems.map { $0.id },
                                                            engine: engineSelectedItems.map { $0.nome },
                                                            year: yearSelectedItems.map { $0.nome },
                                                            color: colorSelectedItems.map { $0.nome }))
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
         do {
-            let searchDataDictionary = [
-                "search": searchData.search,
-                "advanced": searchData.advanced.serializable
-            ] as [String : Any]
-
-            let jsonData = try JSONSerialization.data(withJSONObject: searchDataDictionary, options: .prettyPrinted)
+            let jsonData = try encoder.encode(searchData)
             return jsonData
         } catch {
             print("Error encoding JSON: \(error)")
@@ -454,22 +437,9 @@ extension SearchViewController {
     }
 }
 
-
 extension Sequence where Element: Hashable {
     func uniqued() -> [Element] {
         var seen = Set<Element>()
         return filter { seen.insert($0).inserted }
-    }
-}
-
-
-extension AdvancedData {
-    var serializable: [String: Any] {
-        return [
-            "brand": brand,
-            "engine": engine,
-            "year": year,
-            "color": color
-        ]
     }
 }

@@ -27,6 +27,8 @@ extension HomeViewController: SearchViewControllerDelegate {
         if let jsonData = jsonData,
            let jsonString = String(data: jsonData, encoding: .utf8) {
             print(jsonString)
+            screen?.firstInputJsonLabel.isHidden = true
+            screen?.inputJsonLabel.isHidden = false
             screen?.inputJsonLabel.text = jsonString
         }
     }
