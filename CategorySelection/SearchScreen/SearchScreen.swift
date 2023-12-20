@@ -17,6 +17,18 @@ class SearchScreen: UIView {
     
     var delegate: SearchScreenProtocol?
     
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var conteinerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -312,32 +324,39 @@ class SearchScreen: UIView {
     }
     
     private func addSubview() {
+        
+        addSubview(scrollView)
+        scrollView.addSubview(conteinerView)
+        conteinerView.addSubview(typeSomethingTextField)
+        conteinerView.addSubview(brandTitleLabel)
+        conteinerView.addSubview(brandView)
+        brandView.addSubview(brandLabel)
+        brandView.addSubview(pencilBrandButton)
+        
+        conteinerView.addSubview(engineTitleLabel)
+        conteinerView.addSubview(engineView)
+        engineView.addSubview(engineLabel)
+        engineView.addSubview(pencilEngineButton)
+        
+        conteinerView.addSubview(yearTitleLabel)
+        conteinerView.addSubview(yearView)
+        yearView.addSubview(yearLabel)
+        yearView.addSubview(pencilYearButton)
+        
+        conteinerView.addSubview(colorTitleLabel)
+        conteinerView.addSubview(colorView)
+        colorView.addSubview(colorLabel)
+        colorView.addSubview(pencilColorButton)
+        
         addSubview(topView)
+        addSubview(bottomView)
         addSubview(cleanButton)
         addSubview(titleLabel)
         addSubview(backButton)
-        addSubview(typeSomethingTextField)
-        addSubview(bottomView)
         addSubview(filterButton)
-        addSubview(brandTitleLabel)
-        addSubview(brandView)
-        brandView.addSubview(brandLabel)
-        brandView.addSubview(pencilBrandButton)
-        addSubview(engineTitleLabel)
-        addSubview(engineView)
-        engineView.addSubview(engineLabel)
-        engineView.addSubview(pencilEngineButton)
-        addSubview(yearTitleLabel)
-        addSubview(yearView)
-        yearView.addSubview(yearLabel)
-        yearView.addSubview(pencilYearButton)
-        addSubview(colorTitleLabel)
-        addSubview(colorView)
-        colorView.addSubview(colorLabel)
-        colorView.addSubview(pencilColorButton)
+        
         setUpConstraints()
         backgroundColor()
-        
     }
     
     private func backgroundColor() {
@@ -347,6 +366,18 @@ class SearchScreen: UIView {
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             
+            scrollView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomView.topAnchor),
+
+            conteinerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            conteinerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            conteinerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            conteinerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            conteinerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            conteinerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
             topView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topView.topAnchor.constraint(equalTo: topAnchor),
@@ -354,93 +385,94 @@ class SearchScreen: UIView {
             
             titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: topView.centerYAnchor, constant: 25),
-            
+
             backButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 17),
-            
+
             cleanButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             cleanButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -17),
 
-            typeSomethingTextField.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 32),
-            typeSomethingTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            typeSomethingTextField.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -16),
+            typeSomethingTextField.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 32),
+            typeSomethingTextField.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            typeSomethingTextField.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
             typeSomethingTextField.heightAnchor.constraint(equalToConstant: 44),
-            
+
             bottomView.leadingAnchor.constraint(equalTo: leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottomView.heightAnchor.constraint(equalToConstant: 95),
-            
+
             filterButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
             filterButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             filterButton.heightAnchor.constraint(equalToConstant: 41),
-            
+
             brandTitleLabel.topAnchor.constraint(equalTo: typeSomethingTextField.bottomAnchor, constant: 22),
-            brandTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            brandTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
+            brandTitleLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            brandTitleLabel.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -300),
 
             brandView.topAnchor.constraint(equalTo: brandTitleLabel.bottomAnchor, constant: 12),
-            brandView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            brandView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            brandView.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            brandView.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
 
             brandLabel.topAnchor.constraint(equalTo: brandView.topAnchor, constant: 10),
             brandLabel.leadingAnchor.constraint(equalTo: brandView.leadingAnchor, constant: 12),
             brandLabel.trailingAnchor.constraint(equalTo: brandView.trailingAnchor),
             brandLabel.bottomAnchor.constraint(equalTo: brandView.bottomAnchor, constant: -10),
             brandLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            
+
             pencilBrandButton.centerYAnchor.constraint(equalTo: brandView.centerYAnchor),
             pencilBrandButton.trailingAnchor.constraint(equalTo: brandView.trailingAnchor, constant: -22),
-            
+
             engineTitleLabel.topAnchor.constraint(equalTo: brandView.bottomAnchor, constant: 12),
-            engineTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            engineTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
-            
+            engineTitleLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            engineTitleLabel.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -300),
+
             engineView.topAnchor.constraint(equalTo: engineTitleLabel.bottomAnchor, constant: 12),
-            engineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            engineView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            engineView.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            engineView.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
 
             engineLabel.topAnchor.constraint(equalTo: engineView.topAnchor, constant: 10),
             engineLabel.leadingAnchor.constraint(equalTo: engineView.leadingAnchor, constant: 12),
             engineLabel.trailingAnchor.constraint(equalTo: engineView.trailingAnchor),
             engineLabel.bottomAnchor.constraint(equalTo: engineView.bottomAnchor, constant: -10),
             engineLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            
+
             pencilEngineButton.centerYAnchor.constraint(equalTo: engineView.centerYAnchor),
             pencilEngineButton.trailingAnchor.constraint(equalTo: engineView.trailingAnchor, constant: -22),
-            
+
             yearTitleLabel.topAnchor.constraint(equalTo: engineView.bottomAnchor, constant: 12),
-            yearTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            yearTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
-            
+            yearTitleLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            yearTitleLabel.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -330),
+
             yearView.topAnchor.constraint(equalTo: yearTitleLabel.bottomAnchor, constant: 12),
-            yearView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            yearView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            yearView.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            yearView.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
 
             yearLabel.topAnchor.constraint(equalTo: yearView.topAnchor, constant: 10),
             yearLabel.leadingAnchor.constraint(equalTo: yearView.leadingAnchor, constant: 12),
             yearLabel.trailingAnchor.constraint(equalTo: yearView.trailingAnchor),
             yearLabel.bottomAnchor.constraint(equalTo: yearView.bottomAnchor, constant: -10),
             yearLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            
+
             pencilYearButton.centerYAnchor.constraint(equalTo: yearView.centerYAnchor),
             pencilYearButton.trailingAnchor.constraint(equalTo: yearView.trailingAnchor, constant: -22),
-            
+
             colorTitleLabel.topAnchor.constraint(equalTo: yearView.bottomAnchor, constant: 12),
-            colorTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            colorTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -330),
-            
+            colorTitleLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            colorTitleLabel.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -330),
+
             colorView.topAnchor.constraint(equalTo: colorTitleLabel.bottomAnchor, constant: 12),
-            colorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            colorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            colorView.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            colorView.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
+            colorView.bottomAnchor.constraint(equalTo: conteinerView.bottomAnchor, constant: -16),
 
             colorLabel.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 10),
             colorLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             colorLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
             colorLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -10),
             colorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            
+
             pencilColorButton.centerYAnchor.constraint(equalTo: colorView.centerYAnchor),
             pencilColorButton.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -22),
 

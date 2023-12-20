@@ -15,6 +15,18 @@ class HomeScreen: UIView {
     
     var delegate: ScreenProtocol?
     
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var conteinerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -109,13 +121,16 @@ class HomeScreen: UIView {
     }
     
     private func addSubview() {
-        addSubview(topView)
-        addSubview(titleLabel)
-        addSubview(searchJsonLabel)
-        addSubview(JSONLabel)
+        
+        addSubview(scrollView)
+        scrollView.addSubview(conteinerView)
+        conteinerView.addSubview(searchJsonLabel)
+        conteinerView.addSubview(JSONLabel)
         JSONLabel.addSubview(firstInputJsonLabel)
         JSONLabel.addSubview(inputJsonLabel)
-        addSubview(openSearchButton)
+        conteinerView.addSubview(openSearchButton)
+        addSubview(topView)
+        addSubview(titleLabel)
         setUpConstraints()
         backgroundColor()
         
@@ -128,6 +143,18 @@ class HomeScreen: UIView {
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             
+            scrollView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+
+            conteinerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            conteinerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            conteinerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            conteinerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            conteinerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            conteinerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            
             topView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topView.topAnchor.constraint(equalTo: topAnchor),
@@ -136,13 +163,12 @@ class HomeScreen: UIView {
             titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: topView.centerYAnchor, constant: 25),
             
-            searchJsonLabel.topAnchor.constraint(equalTo: topAnchor, constant: 150),
-            searchJsonLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 130),
-            searchJsonLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -130),
+            searchJsonLabel.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 40),
+            searchJsonLabel.centerXAnchor.constraint(equalTo: conteinerView.centerXAnchor),
             
             JSONLabel.topAnchor.constraint(equalTo: searchJsonLabel.bottomAnchor, constant: 12),
-            JSONLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            JSONLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            JSONLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            JSONLabel.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
             JSONLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 254),
             
             firstInputJsonLabel.topAnchor.constraint(equalTo: JSONLabel.topAnchor, constant: 12),
@@ -155,8 +181,9 @@ class HomeScreen: UIView {
             inputJsonLabel.bottomAnchor.constraint(equalTo: JSONLabel.bottomAnchor, constant: -12),
             
             openSearchButton.topAnchor.constraint(equalTo: JSONLabel.bottomAnchor, constant: 36),
-            openSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            openSearchButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            openSearchButton.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 16),
+            openSearchButton.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -16),
+            openSearchButton.bottomAnchor.constraint(equalTo: conteinerView.bottomAnchor, constant: -16),
             openSearchButton.heightAnchor.constraint(equalToConstant: 41),
             
         ])
